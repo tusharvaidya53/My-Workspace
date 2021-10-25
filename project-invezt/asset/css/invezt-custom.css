@@ -1,0 +1,192 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.3.6,
+* Autoprefixer: v10.3.1
+* Browsers: last 4 version
+*/
+
+.c-init {
+    width: initial;
+}
+
+.c-datastrip {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    -moz-box-pack:justify;
+    justify-content: space-between;
+    border: 1px solid #c1c1c1;
+    margin-top: 10px;
+}
+
+.c-datastrip-start {
+    width: 70%;
+}
+
+.c-datastrip-end {
+    text-align: center;
+    position: relative;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -moz-box-pack: center;
+    justify-content: center;
+    color: #fff;
+    padding: 10px;
+    font-size: 28px;
+    min-width: 100px;
+}
+
+.c-detail-top {
+    font-size: 25px;
+}
+
+.c-detail-bottom {
+    font-size: 14px;
+}
+
+.c-detail-icon {
+    width: initial;
+    padding: 0;
+}
+
+    .c-detail-icon img {
+        height: 60px;
+    }
+    .c-detail-icon img {
+        padding-top: 10px;
+    }
+
+.c-logo {
+    height: 30px;
+}
+
+.c-graph {
+    height: 200px;
+}
+
+.c-nav-icon {
+    height: 35px;
+}
+.c-nav-icon {
+    padding: 5px;
+}
+.c-graph-bottom {
+    font-size: 11px;
+    padding: 10px;
+    text-align: center;
+}
+
+.c-warning {
+    font-size: 11px;
+    padding: 5px;
+    float: right;
+}
+
+.c-font {
+    font-size: 13px;
+}
+
+.c-1-color-manage .c-datastrip-end {
+    background-color: #14a388;
+}
+
+.c-1-color-manage .c-datastrip-active {
+    border-left: 7px solid #14a388;
+}
+
+.c-2-color-manage .c-datastrip-end {
+    background-color: #13bc9c;
+}
+
+.c-2-color-manage .c-datastrip-active {
+    border-left: 7px solid #13bc9c;
+}
+
+.c-3-color-manage .c-datastrip-end {
+    background-color: #425b77;
+}
+
+.c-3-color-manage .c-datastrip-active {
+    border-left: 7px solid #425b77;
+}
+
+a.c-strip-link {
+    color: #000;
+    text-decoration: none;
+}
+
+    a.c-strip-link :hover {
+        -webkit-transform: scale(1.005);
+        -ms-transform: scale(1.005);
+        transform: scale(1.005);
+    }
+
+.c-datastrip-start .c-font ul {
+    list-style: none;
+}
+
+    .c-datastrip-start .c-font ul li::before {
+        content: "\2022";
+        font-size: 44px;
+        vertical-align: text-bottom;
+        line-height: 21px;
+        padding-right: 5px;
+    }
+
+.c-1-color-manage ul li::before {
+    color: #14a388;
+}
+
+.c-2-color-manage ul li::before {
+    color: #13bc9c;
+}
+
+.c-3-color-manage ul li::before {
+    color: #425b77;
+}
+
+.c-btn {
+    color: #fff;
+    background-color: #13bc9c;
+    border-color: #13bc9c;
+    padding: 7px 35px;
+    font-size: 17px;
+}
+
+button.c-btn:hover {
+    -webkit-transform: scale(1.03);
+    -ms-transform: scale(1.03);
+    transform: scale(1.03);
+    border: 2px solid #13bc9c;
+    color: #fff;
+}
+
+.c-shadow {
+    -webkit-box-shadow: 3px 4px 5px 1px #c1c1c1c7;
+    box-shadow: 3px 4px 5px 1px #c1c1c1c7;
+}
+
+.c-1-font {
+    font-weight: 100;
+    letter-spacing: 1px;
+}
+
+.c-2-font {
+    font-weight: 100;
+    letter-spacing: 0;
+}
+
+.c-font-weight {
+    font-weight: 500;
+}
+.c-justify-content{
+    justify-content:space-between;
+}
+.c-2-justify-content {
+    justify-content: space-between;
+}
+.c-3-justify-content {
+    justify-content: space-between;
+}
