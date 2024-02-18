@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maitri-buy</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+    .product {
+      margin-bottom: 20px;
+    }
+    .whatsapp-link {
+      display: block;
+      background-color: green;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+    .whatsapp-link:hover {
+      background-color: darkgreen;
+    }
+    .language-selector {
+      margin-bottom: 20px;
+    }
+    .how-to-buy {
+      margin-top: 20px;
+    }
+    @media screen and (max-width: 600px) {
+      .container {
+        padding: 0 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Welcome to Maitri Store!</h1>
+  
+  <div class="language-selector">
+    <label for="language">Select Language (भाषा चुने):</label>
+    <select id="language" onchange="changeLanguage()">
+      <option value="marathi" selected>मराठी</option>
+      <option value="hindi">हिंदी</option>
+      <option value="english">English</option>
+    </select>
+  </div>
+   <!-- Marathi Content -->
+   <div id="marathi-content">
+    <div class="product">
+      <h2>उत्पाद का नाम: चावल (जय श्री राम)</h2>
+      <p>मूल्य: Rs 67/kg</p>
+    </div>
+    <div class="how-to-buy">
+      <h3>कसा विकता घेता यावा:</h3>
+      <p>या उत्पादाची खरेदी करण्यासाठी, खालील प्रक्रिया अपलिक करा:</p>
+      <ol>
+        <li>आपल्याला आमच्या WhatsApp समूहात सामील होण्यासाठी खालील "समूहात सामील होण्यासाठी" बटणावर क्लिक करा.</li>
+        <li>जेव्हा आपण समूहात सामील होईल तेव्हा आपल्याला आमच्या कॉल प्राप्त होईल ज्यात आम्ही आपल्याला ऑर्डरची पुष्टी करण्यासाठी कॉल करीत असलील. कॉल करताना, आम्ही रक्कम आणि पत्ता तपासण्याचे विवरण पुच्छेल.</li>
+        <li>आपल्या बुकिंगची पुष्टी करण्यानंतर, आम्ही आपल्या पुष्टीत ऑर्डरसाठी अलगद व्हॅट्सएप समूहात जोडणार आहोत.</li>
+        <li>समूहात जोडण्यानंतर, आपल्या ऑर्डरची 15 दिवसांत डिलिव्हरी केली जाईल.</li>
+      </ol>
+    </div>
+    <a href="https://chat.whatsapp.com/Gny0Vjbu9VE03qxiwbGCF6" class="whatsapp-link" target="_blank">आमच्या WhatsApp समूहात सामील होण्यासाठी येथे क्लिक करा</a>
+</div>
+
+  <div id="english-content" style="display: none;">
+    <div class="product">
+      <h2>Product Name: Rice (Jay shree Ram)</h2>
+      <p>Price: Rs 67/kg</p>
+    </div>
+    <div class="how-to-buy">
+      <h3>How to Buy:</h3>
+      <p>To purchase this product, follow these steps:</p>
+      <ol>
+        <li>Click the "Join Group" button below to join our WhatsApp group.</li>
+        <li>Once you join the group, you will receive a call from us to confirm your order. During the call, we'll ask for the amount and address details.</li>
+        <li>After confirming your booking, we will add you to a different WhatsApp group specifically for confirmed orders.</li>
+        <li>Once added to the group, your order will be delivered within 15 days.</li>
+      </ol>
+    </div>
+    <a href="https://chat.whatsapp.com/Gny0Vjbu9VE03qxiwbGCF6" class="whatsapp-link" target="_blank">Join our WhatsApp Group</a>
+  </div>
+
+  <!-- Hindi Content -->
+  <div id="hindi-content" style="display: none;">
+    <div class="product">
+      <h2>उत्पाद का नाम: XYZ</h2>
+      <p>मूल्य: Rs 67/kg</p>
+    </div>
+    <div class="how-to-buy">
+      <h3>खरीदने का तरीका:</h3>
+      <p>इस उत्पाद को खरीदने के लिए, निम्नलिखित चरणों का पालन करें:</p>
+      <ol>
+        <li>नीचे दिए गए "समूह में शामिल हों" बटन पर क्लिक करें ताकि हमारे WhatsApp समूह में शामिल हो सकें।</li>
+        <li>जब आप समूह में शामिल होंगे, हम आपको एक कॉल करेंगे जिसमें हम आपकी आदेश की पुष्टि करेंगे। कॉल के दौरान, हम आपसे राशि और पते के विवरण पूछेंगे।</li>
+        <li>आपकी बुकिंग की पुष्टि के बाद, हम आपको पुष्टित आदेशों के लिए अलग WhatsApp समूह में जोड़ेंगे।</li>
+        <li>समूह में जोड़ने के बाद, आपकी आदेश 15 दिनों के भीतर डिलीवर हो जाएगी।</li>
+      </ol>
+    </div>
+    <a href="https://chat.whatsapp.com/Gny0Vjbu9VE03qxiwbGCF6" class="whatsapp-link" target="_blank">हमारे WhatsApp समूह में शामिल हों</a>
+  </div>
+  
+  <script>
+    function changeLanguage() {
+      var language = document.getElementById("language").value;
+      if (language === "english") {
+        document.getElementById("english-content").style.display = "block";
+        document.getElementById("marathi-content").style.display = "none";
+        document.getElementById("hindi-content").style.display = "none";
+      } else if (language === "marathi") {
+        document.getElementById("english-content").style.display = "none";
+        document.getElementById("marathi-content").style.display = "block";
+        document.getElementById("hindi-content").style.display = "none";
+      } else if (language === "hindi") {
+        document.getElementById("english-content").style.display = "none";
+        document.getElementById("marathi-content").style.display = "none";
+        document.getElementById("hindi-content").style.display = "block";
+      }
+    }
+  </script>
+</div>
+
+</body>
+</html>
