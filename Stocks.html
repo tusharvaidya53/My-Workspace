@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Buttons</title>
+    <style>
+        #buttonContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        button {
+            padding: 10px;
+            font-size: 14px;
+        }
+    </style>
+    <script>
+        const companies = [
+            'Mazagon Dock Ship', 'Bharat Dynamics', 'HAL (Hindustan Aeronautics Limited)', 'Bharat Electronics', 
+            'Vedanta', 'RECL (Rural Electrification Corporation Limited)', 'Power Grid Corp (Power Grid Corporation of India Limited)', 
+            'Exide Industries', 'Dixon', 'Cochin Shipyard', 'Hindalco', 'TD Power Systems', 'Container Corporation of India', 
+            'IRFC (Indian Railway Finance Corporation)', 'Indian Renewable Energy', 'Power Finance Corporation', 'Rail Vikas Nigam', 
+            'Bharti Airtel', 'Fortis Healthcare', 'NTPC (National Thermal Power Corporation)', 'GMR Airports Infrastructure', 
+            'Adani Power', 'Sun Pharmaceutical', 'Tata Steel', 'Mahindra & Mahindra', 'SBI (State Bank of India)', 
+            'ONGC (Oil and Natural Gas Corporation)', 'Adani Green Energy', 'Jindal Steel & Power', 'Lupin', 'JIO Financial Services', 
+            'NHPC (National Hydroelectric Power Corporation)', 'Ircon International', 'LIC (Life Insurance Corporation of India)', 
+            'Max Healthcare', 'BHEL (Bharat Heavy Electricals Limited)', 'Kalyan Jewellers', 'Data Patterns', 'TV Today Network', 
+            'Narmada Gelatin', 'Nifty Bees', 'Next50', 'Netfauto', 'GAIL', 'HUDCO', 'KEI Industries', 'Suzlon Industries', 
+            'Adani Port', 'KEI Industries', 'SJVN'
+        ];
+
+        function searchGoogle(query) {
+            const url = 'https://www.google.com/search?q=' + encodeURIComponent(query) + '&tbm=nws&tbs=qdr:d3';
+            window.open(url, '_blank');
+        }
+
+        window.onload = function() {
+            const container = document.getElementById('buttonContainer');
+            companies.forEach(company => {
+                const button = document.createElement('button');
+                button.innerText = company;
+                button.onclick = () => searchGoogle(company);
+                container.appendChild(button);
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="buttonContainer"></div>
+</body>
+</html>
