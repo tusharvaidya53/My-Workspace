@@ -1085,9 +1085,8 @@ function textToSpeech(text) {
     let synth = speechSynthesis,
         isSpeaking = true;
 
-    voices();
-
-    function voices() {
+    function populateVoices() {
+        voiceList.innerHTML='';
       for (let voice of synth.getVoices()) {
         let selected = voice.lang === "ja-JP" ? "selected" : "";
         let option = `<option value="${voice.name}" ${selected}>${voice.name} (${voice.lang})</option>`;
@@ -1095,9 +1094,13 @@ function textToSpeech(text) {
       }
     }
 
-    synth.addEventListener("voiceschanged", voices);
+    synth.addEventListener("voiceschanged", populateVoices);
+    populateVoices();
     function textToSpeech(text) {
     let utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate =1;
+        utterance.pitch=1;
+        utterance.volume=1;
     for (let voice of synth.getVoices()) {
         if (voice.name === voiceList.value) {
             utterance.voice = voice;
@@ -1106,15 +1109,7 @@ function textToSpeech(text) {
     synth.speak(utterance);
 }
 
-    function textToSpeech(text) {
-      let utterance = new SpeechSynthesisUtterance(text);
-      for (let voice of synth.getVoices()) {
-        if (voice.name === voiceList.value) {
-          utterance.voice = voice;
-        }
-      }
-      synth.speak(utterance);
-    }
+    
 
     speechBtn.addEventListener("click", e => {
       e.preventDefault();
