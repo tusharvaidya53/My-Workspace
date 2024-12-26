@@ -1,1 +1,1153 @@
 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Matching Game</title>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 10px;
+        }
+
+        .character-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+             margin-top: 10px; 
+            /* padding: 10px;  */
+            border-radius: 10px;
+        }
+
+        .character {
+            padding: 5px;
+            border: 1px solid #ccc;
+            text-align: center;
+            cursor: pointer;
+            width: 60px;
+            height: 60px;
+            color: #fff; 
+            background: #000;
+            font-size: 35px;
+        }
+
+        .incorrect {
+            background-color: #f88;
+        }
+
+        .correct {
+            background-color: #8f8;
+        }
+
+        select {
+            display: row;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+            margin: 3px;
+        }
+        #buttonsContainer button{
+            color: #fff;
+            background-color: #5c96b8;
+            border-color: #5c96b8;
+            display: inline-block;
+            padding: 3px 6px;
+            margin-bottom: 0;
+            font-size: 18px;
+            font-weight: normal;
+            line-height: 1.428571429;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            margin: 3px;
+        }
+        .table thead tr th, .table tbody tr th, .table thead tr td, .table tbody tr td, .table tfoot tr td{
+            padding: 0px;
+    line-height: 1;
+        }
+    </style>
+    <style>
+        .cus_1{
+            background-color: #f0e64e;
+            color: #000;
+            font-size: 25px;
+            border-radius: 25px;
+            font-family: fantasy;
+        }
+
+        .cus_2{
+            background-image: linear-gradient(90deg, rgb(7 5 35 / 8%) 0%, #370403e0 0%, #020931e6 100%), url(https://i0.wp.com/www.michigandaily.com/wp-content/uploads/2021/03/0-1.jpg);
+            border-image: repeat;
+            background-size: contain;
+        }
+        select{
+            width: 111px;
+            margin-top: 7px;
+            font-size: 1.5rem;
+        }
+        .p_2{
+            padding: 10px;
+        }
+        #inputKeys{
+            width: 100%;
+            word-spacing: 23.5px;
+            font-size: 15px;
+            padding-left: 13px;
+        }
+        #dataTable ,#dataTable_2 {
+            display: none;
+        }
+
+        #dataTable thead,#dataTable_2 thead {
+            background-color: #000;
+            color: #fff;
+        }
+        #dataTable tbody,#dataTable_2 tbody {
+            background-color: #fff;
+        }
+        .word {
+            display: inline-block;
+            width: 70px;
+            text-align: center;
+            padding: 5px;
+            font-size: 13px;
+        }
+        #output{
+            color: #fff;
+        }
+        @media (max-width: 600px) {
+            #characters .character:nth-child(-n+5){
+                position: relative;
+                top: 0px;
+                left: 5px;
+            }
+            #characters .character:nth-child(n+6):nth-child(-n+10) {
+                position: relative;
+                top: 30PX;
+                left: 5px;
+            }
+
+            #output .word:nth-child(-n+5) {
+                position: relative;
+                top: -70px;
+                left: 0px;
+             }
+
+            #output .word:nth-child(n+6):nth-child(-n+10) {
+                position: relative;
+                top: 5px; /* Adjust as needed for mobile */
+                left: 0px; /* Adjust as needed for mobile */
+            }
+            #inputKeys{
+                margin-top: 45px;
+            }
+            tbody td {
+                font-size: 20px;
+                padding: 5px !important;           
+             }
+             #buttonsContainer button {
+                margin: 10px;
+             }
+}
+      
+    </style>
+
+</head>
+
+<body class="cus_2">
+    <div class="col-md-12 text-center p-0 cus_1">Character Matching</div>
+
+    <div class="col-md-12 row">
+    <select id="setSelector1" onchange="loadCharacters_1()">
+        <option disabled selected><b>Section-1</b></option>
+        <option value="0">Set 1</option>
+        <option value="1">Set 2</option>
+        <option value="2">Set 3</option>
+        <option value="3">Set 4</option>
+        <option value="4">Set 5</option>
+        <option value="5">Set 6</option>
+        <option value="6">Set 7</option>
+        <option value="7">Set 8</option>
+        <option value="8">Set 9</option>
+        <option value="9">Set 10</option>
+        <option value="10">Set 11</option>
+        <option value="11">Set 12</option>
+        <option value="12">Set 13</option>
+        <option value="13">Set 14</option>
+        <option value="14">Set 15</option>
+    </select>
+    <select id="setSelector2" onchange="loadCharacters_2()">
+        <option disabled selected><b>Section-2</b></option>
+        <option value="15">Set 1</option>
+        <option value="16">Set 2</option>
+        <option value="17">Set 3</option>
+        <option value="18">Set 4</option>
+        <option value="19">Set 5</option>
+        <option value="20">Set 6</option>
+        <option value="21">Set 7</option>
+        <option value="22">Set 8</option>
+        <option value="23">Set 9</option>
+        <option value="24">Set 10</option>
+        <option value="25">Set 11</option>
+        <option value="26">Set 12</option>
+        <option value="27">Set 13</option>
+        <option value="28">Set 14</option>
+        <option value="29">Set 15</option>
+    </select>
+    <select id="setSelector3" onchange="loadCharacters_3()">
+        <option disabled selected><b>Section-3</b></option>
+        <option value="30">Set 1</option>
+        <option value="31">Set 2</option>
+        <option value="32">Set 3</option>
+        <option value="33">Set 4</option>
+        <option value="34">Set 5</option>
+        <option value="35">Set 6</option>
+        <option value="36">Set 7</option>
+        <option value="37">Set 8</option>
+        <option value="38">Set 9</option>
+        <option value="39">Set 10</option>
+        <option value="40">Set 11</option>
+        <option value="41">Set 12</option>
+        <option value="42">Set 13</option>
+        <option value="43">Set 14</option>
+        <option value="44">Set 15</option>
+    </select>
+    <select id="setSelector4" onchange="loadCharacters_4()">
+        <option disabled selected><b>Section-4</b></option>
+        <option value="45">Set 1</option>
+        <option value="46">Set 2</option>
+        <option value="47">Set 3</option>
+        <option value="48">Set 4</option>
+        <option value="49">Set 5</option>
+        <option value="50">Set 6</option>
+        <option value="51">Set 7</option>
+        <option value="52">Set 8</option>
+        <option value="53">Set 9</option>
+        <option value="54">Set 10</option>
+        <option value="55">Set 11</option>
+        <option value="56">Set 12</option>
+        <option value="57">Set 13</option>
+        <option value="58">Set 14</option>
+        <option value="59">Set 15</option>
+    </select>
+    <select id="setSelector5" onchange="loadCharacters_5()">
+        <option disabled selected><b>Section-5</b></option>
+        <option value="60">Set 1</option>
+        <option value="61">Set 2</option>
+        <option value="62">Set 3</option>
+        <option value="63">Set 4</option>
+        <option value="64">Set 5</option>
+        <option value="65">Set 6</option>
+        <option value="66">Set 7</option>
+        <option value="67">Set 8</option>
+        <option value="68">Set 9</option>
+        <option value="69">Set 10</option>
+        <option value="70">Set 11</option>
+        <option value="71">Set 12</option>
+        <option value="72">Set 13</option>
+        <option value="73">Set 14</option>
+        <option value="74">Set 15</option>
+    </select>
+    <select id="setSelector6" onchange="loadCharacters_6()">
+        <option disabled selected><b>Section-6</b></option>
+        <option value="75">Set 1</option>
+        <option value="76">Set 2</option>
+        <option value="77">Set 3</option>
+        <option value="78">Set 4</option>
+        <option value="79">Set 5</option>
+        <option value="80">Set 6</option>
+        <option value="81">Set 7</option>
+        <option value="82">Set 8</option>
+        <option value="83">Set 9</option>
+        <option value="84">Set 10</option>
+        <option value="85">Set 11</option>
+        <option value="86">Set 12</option>
+        <option value="87">Set 13</option>
+        <option value="88">Set 14</option>
+        <option value="89">Set 15</option>
+    </select>
+    <select id="setSelector7" onchange="loadCharacters_7()">
+        <option disabled selected><b>Section-7</b></option>
+        <option value="90">Set 1</option>
+        <option value="91">Set 2</option>
+        <option value="92">Set 3</option>
+        <option value="93">Set 4</option>
+        <option value="94">Set 5</option>
+        <option value="95">Set 6</option>
+        <option value="96">Set 7</option>
+        <option value="97">Set 8</option>
+        <option value="98">Set 9</option>
+        <option value="100">Set 10</option>
+        <option value="101">Set 11</option>
+        <option value="102">Set 12</option>
+        <option value="103">Set 13</option>
+        <option value="104">Set 14</option>
+        <option value="105">Set 15</option>
+    </select>
+    <select id="setSelector8" onchange="loadCharacters_8()">
+        <option disabled selected><b>Section-8</b></option>
+        <option value="106">Set 1</option>
+        <option value="107">Set 2</option>
+        <option value="108">Set 3</option>
+        <option value="109">Set 4</option>
+        <option value="110">Set 5</option>
+        <option value="111">Set 6</option>
+        <option value="112">Set 7</option>
+        <option value="113">Set 8</option>
+        <option value="114">Set 9</option>
+        <option value="115">Set 10</option>
+        <option value="116">Set 11</option>
+        <option value="117">Set 12</option>
+        <option value="118">Set 13</option>
+        <option value="119">Set 14</option>
+        <option value="120">Set 15</option>
+    </select>
+    <select id="setSelector9" onchange="loadCharacters_9()">
+        <option disabled selected><b>Section-9</b></option>
+        <option value="121">Set 1</option>
+        <option value="122">Set 2</option>
+        <option value="123">Set 3</option>
+        <option value="124">Set 4</option>
+        <option value="125">Set 5</option>
+        <option value="126">Set 6</option>
+        <option value="127">Set 7</option>
+        <option value="128">Set 8</option>
+        <option value="129">Set 9</option>
+        <option value="130">Set 10</option>
+        <option value="131">Set 11</option>
+        <option value="132">Set 12</option>
+        <option value="133">Set 13</option>
+        <option value="134">Set 14</option>
+        <option value="135">Set 15</option>
+    </select>
+    <select id="setSelector10" onchange="loadCharacters_10()">
+        <option disabled selected><b>Section-10</b></option>
+        <option value="136">Set 1</option>
+        <option value="137">Set 2</option>
+        <option value="138">Set 3</option>
+        <option value="139">Set 4</option>
+        <option value="140">Set 5</option>
+        <option value="141">Set 6</option>
+        <option value="142">Set 7</option>
+        <option value="143">Set 8</option>
+        <option value="144">Set 9</option>
+        <option value="145">Set 10</option>
+        <option value="146">Set 11</option>
+        <option value="147">Set 12</option>
+        <option value="148">Set 13</option>
+        <option value="149">Set 14</option>
+        <option value="150">Set 15</option>
+    </select>
+    <select id="setSelector11" onchange="loadCharacters_11()">
+        <option disabled selected><b>Section-11</b></option>
+        <option value="151">Set 1</option>
+        <option value="152">Set 2</option>
+        <option value="153">Set 3</option>
+        <option value="154">Set 4</option>
+        <option value="155">Set 5</option>
+        <option value="156">Set 6</option>
+        <option value="157">Set 7</option>
+        <option value="158">Set 8</option>
+        <option value="159">Set 9</option>
+        <option value="160">Set 10</option>
+        <option value="161">Set 11</option>
+        <option value="162">Set 12</option>
+        <option value="163">Set 13</option>
+        <option value="164">Set 14</option>
+        <option value="165">Set 15</option>
+    </select>
+    <select id="setSelector12" onchange="loadCharacters_12()">
+        <option disabled selected><b>Section-12</b></option>
+        <option value="166">Set 1</option>
+        <option value="167">Set 2</option>
+        <option value="168">Set 3</option>
+        <option value="169">Set 4</option>
+        <option value="170">Set 5</option>
+        <option value="171">Set 6</option>
+        <option value="172">Set 7</option>
+        <option value="173">Set 8</option>
+        <option value="174">Set 9</option>
+        <option value="175">Set 10</option>
+        <option value="176">Set 11</option>
+        <option value="177">Set 12</option>
+        <option value="178">Set 13</option>
+        <option value="179">Set 14</option>
+        <option value="180">Set 15</option>
+    </select>
+    <select id="setSelector13" onchange="loadCharacters_13()">
+        <option disabled selected><b>Section-13</b></option>
+        <option value="181">Set 1</option>
+        <option value="182">Set 2</option>
+        <option value="183">Set 3</option>
+        <option value="184">Set 4</option>
+        <option value="185">Set 5</option>
+        <option value="186">Set 6</option>
+        <option value="187">Set 7</option>
+        <option value="188">Set 8</option>
+        <option value="189">Set 9</option>
+        <option value="190">Set 10</option>
+        <option value="191">Set 11</option>
+        <option value="192">Set 12</option>
+        <option value="193">Set 13</option>
+        <option value="194">Set 14</option>
+        <option value="195">Set 15</option>
+    </select>
+    <select id="setSelector14" onchange="loadCharacters_14()">
+        <option disabled selected><b>Section-14</b></option>
+        <option value="196">Set 1</option>
+        <option value="197">Set 2</option>
+        <option value="198">Set 3</option>
+        <option value="199">Set 4</option>
+        <option value="200">Set 5</option>
+        <option value="201">Set 6</option>
+        <option value="202">Set 7</option>
+        <option value="203">Set 8</option>
+        <option value="204">Set 9</option>
+    </select>
+    <select id="setSelector15" onchange="loadCharacters_15()">
+        <option disabled selected><b>Section-15</b></option>
+        <option value="205">Set 10</option>
+        <option value="206">Set 11</option>
+        <option value="207">Set 12</option>
+        <option value="208">Set 13</option>
+        <option value="209">Set 14</option>
+        <option value="210">Set 15</option>
+        <option value="211">Set 16</option>
+        <option value="212">Set 17</option>
+        <option value="213">Set 18</option>
+    </select>
+</div>
+<div class="col-md-12 row p-0 m-0"style="padding:0px">
+    <div class="col-md-8 p-0">
+        <div id="characters" class="character-grid"></div>
+        <div id="output"></div>
+        <input type="text" id="inputKeys" placeholder="" style="text-align: center;" onchange="addSpace()"/>
+            <div class="col-md-12 text-center"style="padding:0px">
+                <br/>
+                <button onclick="checkAnswer()" class="btn btn-sm btn-success">Submit</button>
+                <br/>
+                <p id="result"></p>
+                <div id="buttonsContainer"></div>
+               
+                <!-- <p  style="background-color:#fff; padding: 5px;"   id="cheatSheet"></p> -->
+            </div>
+</div>
+<div class="col-md-4 text-center justify-content-center"style="padding:9px 15px">
+    <button onclick="showPronunciation()" class="btn btn-sm btn-warning">Show Pronouciation</button> <button onclick="showAns()" class="btn btn-sm btn-danger">Show Answer</button>
+
+    <div class="col-md-12" style="padding: 10px 0px;">
+        <div class="col-md-12"id="dataTable">
+            <table class="table table-bordered text-center" >
+                <thead>
+                    <tr>
+                        <th style="padding: 7px;">Number</th>
+                        <th style="padding: 7px;">utterance</th>
+                        <th style="padding: 7px;">Listen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12"id="dataTable_2">
+            <table class="table table-bordered text-center">
+                <thead>
+                    <tr>
+                        <th style="padding: 7px;">Number</th>
+                        <th style="padding: 7px;">character</th>
+                        <th style="padding: 7px;">utterance</th>
+                        <th style="padding: 7px;">Listen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="wrapper" style="display: none;">
+        <form action="#">
+          <div class="row">
+            <label>Paste</label>
+            <textarea id="textarea"></textarea>
+          </div>
+          <div class="row">
+            <label>select language</label>
+            <div class="outer">
+              <select id="select"></select>
+            </div>
+          </div>
+          <button id="button">Submit</button>
+        </form>
+      </div>
+</div>
+
+    <script>
+const data = [
+    [{"1":"亜","(1)":"a"},{"2":"課","(2)":"ka"},{"3":"欧","(3)":"ou"},{"4":"案","(4)":"an"},{"5":"曖","(5)":"ai"},{"6":"位","(6)":"i"},{"7":"握","(7)":"aku"},{"8":"圧","(8)":"atsu"},{"9":"扱","(9)":"atsukai"},{"0":"宛","(0)":"ate"}],
+    [{"1":"嵐","(1)":"arashi"},{"2":"安","(2)":"yasu"},{"3":"愛","(3)":"ai"},{"4":"暗","(4)":"an"},{"5":"因","(5)":"in"},{"6":"栄","(6)":"ei"},{"7":"悪","(7)":"aku"},{"8":"延","(8)":"en"},{"9":"宇","(9)":"u"},{"0":"依","(0)":"i"}],
+    [{"1":"委","(1)":"oi"},{"2":"陰","(2)":"in"},{"3":"為","(3)":"tameie"},{"4":"永","(4)":"ei"},{"5":"胃","(5)":"i"},{"6":"尉","(6)":"yu"},{"7":"央","(7)":"ou"},{"8":"閲","(8)":"etsu"},{"9":"萎","(9)":"sai"},{"0":"偉","(0)":"erai"}],
+    [{"1":"椅","(1)":"isumi"},{"2":"彙","(2)":"huì"},{"3":"音","(3)":"on"},{"4":"違","(4)":"chigau"},{"5":"維","(5)":"i"},{"6":"英","(6)":"ei"},{"7":"遠","(7)":"en"},{"8":"応","(8)":"ou"},{"9":"域","(9)":"iki"},{"0":"育","(0)":"iku"}],
+    [{"1":"一","(1)":"ichi"},{"2":"壱","(2)":"issei"},{"3":"逸","(3)":"itsu"},{"4":"茨","(4)":"ibara"},{"5":"芋","(5)":"imo"},{"6":"引","(6)":"biki"},{"7":"印","(7)":"shirushi"},{"8":"以","(8)":"i"},{"9":"咽","(9)":"in"},{"0":"恩","(0)":"on"}],
+    [{"1":"縁","(1)":"en"},{"2":"億","(2)":"oku"},{"3":"淫","(3)":"in"},{"4":"威","(4)":"i"},{"5":"飲","(5)":"no"},{"6":"衛","(6)":"ei"},{"7":"化","(7)":"ka"},{"8":"右","(8)":"migi"},{"9":"易","(9)":"eki"},{"0":"羽","(0)":"u"}],
+    [{"1":"雨","(1)":"ame"},{"2":"唄","(2)":"uta"},{"3":"鬱","(3)":"utsu"},{"4":"畝","(4)":"une"},{"5":"浦","(5)":"ura"},{"6":"運","(6)":"un"},{"7":"雲","(7)":"kumo"},{"8":"円","(8)":"en"},{"9":"泳","(9)":"ei"},{"0":"慰","(0)":"i"}],
+    [{"1":"臆","(1)":"oku"},{"2":"衣","(2)":"i"},{"3":"営","(3)":"ei"},{"4":"温","(4)":"on"},{"5":"影","(5)":"kage"},{"6":"慣","(6)":"kan"},{"7":"艶","(7)":"en"},{"8":"改","(8)":"kai"},{"9":"看","(9)":"kan"},{"0":"益","(0)":"eki"}],
+    [{"1":"液","(1)":"eki"},{"2":"駅","(2)":"okawa"},{"3":"郭","(3)":"kaku"},{"4":"越","(4)":"echi"},{"5":"謁","(5)":"etsu"},{"6":"頑","(6)":"gan"},{"7":"狂","(7)":"kyou"},{"8":"囲","(8)":"i"},{"9":"沿","(9)":"en"},{"0":"炎","(0)":"honoo"}],
+    [{"1":"怨","(1)":"on"},{"2":"懐","(2)":"kai"},{"3":"媛","(3)":"me"},{"4":"慨","(4)":"gai"},{"5":"園","(5)":"en"},{"6":"煙","(6)":"kemuri"},{"7":"猿","(7)":"saru"},{"8":"遺","(8)":"i"},{"9":"鉛","(9)":"namari"},{"0":"塩","(0)":"shio"}],
+    [{"1":"演","(1)":"en"},{"2":"員","(2)":"in"},{"3":"菓","(3)":"ka"},{"4":"汚","(4)":"o"},{"5":"棺","(5)":"kan"},{"6":"凹","(6)":"boko"},{"7":"確","(7)":"kaku"},{"8":"緯","(8)":"i"},{"9":"往","(9)":"ou"},{"0":"押","(0)":"oshi"}],
+    [{"1":"旺","(1)":"yau"},{"2":"挨","(2)":"ai"},{"3":"殴","(3)":"ou"},{"4":"桜","(4)":"sakura"},{"5":"翁","(5)":"okina"},{"6":"奥","(6)":"oku"},{"7":"横","(7)":"yoko"},{"8":"岡","(8)":"oko"},{"9":"屋","(9)":"ya"},{"0":"院","(0)":"in"}],
+    [{"1":"憶","(1)":"oku"},{"2":"完","(2)":"kan"},{"3":"虞","(3)":"gu"},{"4":"乙","(4)":"otsu"},{"5":"俺","(5)":"ore"},{"6":"卸","(6)":"oroshi"},{"7":"意","(7)":"i"},{"8":"姻","(8)":"in"},{"9":"詠","(9)":"ei"},{"0":"穏","(0)":"on"}],
+    [{"1":"下","(1)":"ge"},{"2":"韻","(2)":"in"},{"3":"火","(3)":"hi"},{"4":"勧","(4)":"kan"},{"5":"貴","(5)":"ki"},{"6":"仮","(6)":"kari"},{"7":"何","(7)":"nani"},{"8":"花","(8)":"hana"},{"9":"佳","(9)":"ka"},{"0":"且","(0)":"katsu"}],
+    [{"1":"獲","(1)":"kaku"},{"2":"河","(2)":"kawa"},{"3":"苛","(3)":"ira"},{"4":"奇","(4)":"ki"},{"5":"架","(5)":"ka"},{"6":"夏","(6)":"natsu"},{"7":"家","(7)":"ie"},{"8":"荷","(8)":"ni"},{"9":"華","(9)":"hannah"},{"0":"隠","(0)":"in"}],
+    [{"1":"貫","(1)":"kan"},{"2":"渦","(2)":"uzu"},{"3":"既","(3)":"ki"},{"4":"嫁","(4)":"yome"},{"5":"暇","(5)":"hima"},{"6":"禍","(6)":"ka"},{"7":"靴","(7)":"kutsu"},{"8":"急","(8)":"kyuu"},{"9":"歌","(9)":"uta"},{"0":"箇","(0)":"ko"}],
+    [{"1":"危","(1)":"ki"},{"2":"哀","(2)":"ai"},{"3":"蚊","(3)":"ka"},{"4":"牙","(4)":"kiba"},{"5":"瓦","(5)":"kawara"},{"6":"我","(6)":"ware"},{"7":"解","(7)":"kai"},{"8":"芽","(8)":"me"},{"9":"勘","(9)":"kan"},{"0":"雅","(0)":"ga"}],
+    [{"1":"餓","(1)":"ga"},{"2":"格","(2)":"kaku"},{"3":"幹","(3)":"kan"},{"4":"灰","(4)":"hai"},{"5":"気","(5)":"ki"},{"6":"拠","(6)":"kyo"},{"7":"疑","(7)":"gi"},{"8":"医","(8)":"i"},{"9":"怪","(9)":"kai"},{"0":"喝","(0)":"katsu"}],
+    [{"1":"旧","(1)":"kyuu"},{"2":"海","(2)":"umi"},{"3":"願","(3)":"gan"},{"4":"皆","(4)":"mina"},{"5":"記","(5)":"ki"},{"6":"絵","(6)":"e"},{"7":"儀","(7)":"gi"},{"8":"階","(8)":"kai"},{"9":"塊","(9)":"katamari"},{"0":"却","(0)":"kyaku"}],
+    [{"1":"画","(1)":"ga"},{"2":"潰","(2)":"tsubu"},{"3":"還","(3)":"kan"},{"4":"宴","(4)":"en"},{"5":"諧","(5)":"kayuki"},{"6":"貝","(6)":"kai"},{"7":"外","(7)":"gai"},{"8":"劾","(8)":"gai"},{"9":"輝","(9)":"ki"},{"0":"崖","(0)":"gake"}],
+    [{"1":"企","(1)":"ki"},{"2":"街","(2)":"machi"},{"3":"援","(3)":"en"},{"4":"緩","(4)":"kan"},{"5":"級","(5)":"kyuu"},{"6":"開","(6)":"kai"},{"7":"骸","(7)":"gai"},{"8":"垣","(8)":"gaki"},{"9":"柿","(9)":"kaki"},{"0":"各","(0)":"kaku"}],
+    [{"1":"角","(1)":"kado"},{"2":"拡","(2)":"hiromu"},{"3":"革","(3)":"kawa"},{"4":"介","(4)":"kai"},{"5":"伎","(5)":"ki"},{"6":"殻","(6)":"kara"},{"7":"悦","(7)":"etsu"},{"8":"覚","(8)":"satoru"},{"9":"議","(9)":"gi"},{"0":"隔","(0)":"kaku"}],
+    [{"1":"希","(1)":"ki"},{"2":"異","(2)":"i"},{"3":"果","(3)":"ka"},{"4":"嚇","(4)":"kaku"},{"5":"義","(5)":"gi"},{"6":"学","(6)":"gaku"},{"7":"岳","(7)":"dake"},{"8":"楽","(8)":"raku"},{"9":"額","(9)":"gaku"},{"0":"顎","(0)":"ago"}],
+    [{"1":"掛","(1)":"kake"},{"2":"潟","(2)":"kata"},{"3":"核","(3)":"kaku"},{"4":"毀","(4)":"ki"},{"5":"拐","(5)":"kai"},{"6":"渇","(6)":"katsu"},{"7":"割","(7)":"wari"},{"8":"葛","(8)":"kuzu"},{"9":"滑","(9)":"name"},{"0":"褐","(0)":"kasshu"}],
+    [{"1":"轄","(1)":"katsu"},{"2":"ka"},{"3":"株","(3)":"kabu"},{"4":"規","(4)":"ki"},{"5":"鎌","(5)":"kama"},{"6":"刈","(6)":"kari"},{"7":"干","(7)":"boshi"},{"8":"刊","(8)":"kan"},{"9":"甘","(9)":"ama"},{"0":"汗","(0)":"ase"}],
+    [{"1":"軌","(1)":"ki"},{"2":"映","(2)":"ei"},{"3":"肝","(3)":"kimo"},{"4":"休","(4)":"kyuu"},{"5":"冠","(5)":"kanmuri"},{"6":"巻","(6)":"maki"},{"7":"疫","(7)":"eki"},{"8":"陥","(8)":"kan"},{"9":"乾","(9)":"ono"},{"0":"賀","(0)":"ga"}],
+    [{"1":"涯","(1)":"gai"},{"2":"貨","(2)":"ka"},{"3":"寒","(3)":"samu"},{"4":"戒","(4)":"kai"},{"5":"堪","(5)":"tan"},{"6":"戯","(6)":"gi"},{"7":"敢","(7)":"isamu"},{"8":"王","(8)":"ou"},{"9":"款","(9)":"kan"},{"0":"間","(0)":"ma"}],
+    [{"1":"季","(1)":"ki"},{"2":"加","(2)":"ka"},{"3":"寛","(3)":"hiroshi"},{"4":"回","(4)":"kai"},{"5":"虐","(5)":"gyaku"},{"6":"窮","(6)":"kyuu"},{"7":"鋭","(7)":"ei"},{"8":"局","(8)":"kyoku"},{"9":"関","(9)":"seki"},{"0":"歓","(0)":"kan"}],
+    [{"1":"嗅","(1)":"kyuu"},{"2":"蓋","(2)":"gai"},{"3":"峡","(3)":"kyou"},{"4":"壊","(4)":"kai"},{"5":"期","(5)":"ki"},{"6":"菌","(6)":"kin"},{"7":"穫","(7)":"kaku"},{"8":"観","(8)":"kan"},{"9":"偶","(9)":"guu"},{"0":"吟","(0)":"gin"}],
+    [{"1":"鑑","(1)":"kazumi"},{"2":"丸","(2)":"maru"},{"3":"含","(3)":"gan"},{"4":"岸","(4)":"kishi"},{"5":"岩","(5)":"iwa"},{"6":"玩","(6)":"otoryo"},{"7":"眼","(7)":"me"},{"8":"移","(8)":"i"},{"9":"顔","(9)":"kao"},{"0":"料","(0)":"ryou"}],
+    [{"1":"患","(1)":"kan"},{"2":"括","(2)":"katsu"},{"3":"区","(3)":"ku"},{"4":"机","(4)":"tsukue"},{"5":"会","(5)":"kai"},{"6":"岐","(6)":"gi"},{"7":"閣","(7)":"kaku"},{"8":"忌","(8)":"imi"},{"9":"汽","(9)":"ki"},{"0":"科","(0)":"ka"}],
+    [{"1":"祈","(1)":"ino"},{"2":"僅","(2)":"kin"},{"3":"紀","(3)":"kiomi"},{"4":"缶","(4)":"kan"},{"5":"過","(5)":"ka"},{"6":"械","(6)":"kai"},{"7":"居","(7)":"i"},{"8":"飢","(8)":"ki"},{"9":"鬼","(9)":"oni"},{"0":"教","(0)":"kyou"}],
+    [{"1":"基","(1)":"motoi"},{"2":"寄","(2)":"yadoriki"},{"3":"釜","(3)":"kama"},{"4":"亀","(4)":"kame"},{"5":"凝","(5)":"gyou"},{"6":"幾","(6)":"ikuya"},{"7":"揮","(7)":"ki"},{"8":"巨","(8)":"kyo"},{"9":"管","(9)":"kan"},{"0":"可","(0)":"ka"}],
+    [{"1":"監","(1)":"kan"},{"2":"活","(2)":"katsu"},{"3":"旗","(3)":"hata"},{"4":"器","(4)":"utsuwa"},{"5":"共","(5)":"kyou"},{"6":"害","(6)":"gai"},{"7":"救","(7)":"kyuu"},{"8":"騎","(8)":"ki"},{"9":"技","(9)":"waza"},{"0":"宜","(0)":"mube"}],
+    [{"1":"偽","(1)":"nise"},{"2":"句","(2)":"ku"},{"3":"距","(3)":"kyo"},{"4":"喚","(4)":"kan"},{"5":"概","(5)":"gai"},{"6":"換","(6)":"ka"},{"7":"惧","(7)":"gu"},{"8":"犠","(8)":"gi"},{"9":"較","(9)":"kaku"},{"0":"菊","(0)":"kiku"}],
+    [{"1":"吉","(1)":"kichi"},{"2":"喫","(2)":"kitsu"},{"3":"詰","(3)":"zume"},{"4":"楷","(4)":"kai"},{"5":"客","(5)":"kyaku"},{"6":"脚","(6)":"ashi"},{"7":"逆","(7)":"gyaku"},{"8":"感","(8)":"kan"},{"9":"九","(9)":"kyou"},{"0":"久","(0)":"hisashi"}],
+    [{"1":"緊","(1)":"kin"},{"2":"弓","(2)":"yumi"},{"3":"丘","(3)":"oka"},{"4":"悔","(4)":"kai"},{"5":"官","(5)":"kan"},{"6":"吸","(6)":"kyuu"},{"7":"朽","(7)":"ku"},{"8":"臼","(8)":"usu"},{"9":"求","(9)":"motome"},{"0":"究","(0)":"kiwamu"}],
+    [{"1":"泣","(1)":"na"},{"2":"寡","(2)":"ka"},{"3":"該","(3)":"gai"},{"4":"金","(4)":"kin"},{"5":"宮","(5)":"miya"},{"6":"窟","(6)":"kutsu"},{"7":"激","(7)":"geki"},{"8":"給","(8)":"kyuu"},{"9":"棄","(9)":"ki"},{"0":"漢","(0)":"kan"}],
+    [{"1":"牛","(1)":"ushi"},{"2":"憬","(2)":"kei"},{"3":"献","(3)":"ken"},{"4":"起","(4)":"ki"},{"5":"拒","(5)":"kyo"},{"6":"廉","(6)":"ren"},{"7":"孤","(7)":"ko"},{"8":"虚","(8)":"kyo"},{"9":"屈","(9)":"kutsu"},{"0":"簡","(0)":"kan"}],
+    [{"1":"魚","(1)":"uo"},{"2":"御","(2)":"o"},{"3":"漁","(3)":"ryou"},{"4":"撃","(4)":"geki"},{"5":"畿","(5)":"ki"},{"6":"潔","(6)":"ketsu"},{"7":"畏","(7)":"i"},{"8":"京","(8)":"kyou"},{"9":"慶","(9)":"kei"},{"0":"碁","(0)":"go"}],
+    [{"1":"言","(1)":"gen"},{"2":"弧","(2)":"ko"},{"3":"憾","(3)":"kai"},{"4":"挟","(4)":"hasa"},{"5":"甲","(5)":"kou"},{"6":"決","(6)":"ketsu"},{"7":"軒","(7)":"ken"},{"8":"胸","(8)":"mune"},{"9":"悟","(9)":"go"},{"0":"強","(0)":"kyou"}],
+    [{"1":"帰","(1)":"ki"},{"2":"郷","(2)":"gou"},{"3":"境","(3)":"sakai"},{"4":"橋","(4)":"hashi"},{"5":"舷","(5)":"gen"},{"6":"鏡","(6)":"kagami"},{"7":"呼","(7)":"ko"},{"8":"渓","(8)":"kei"},{"9":"驚","(9)":"kyou"},{"0":"仰","(0)":"gyou"}],
+    [{"1":"暁","(1)":"akatsuki"},{"2":"業","(2)":"gyou"},{"3":"携","(3)":"kei"},{"4":"響","(4)":"kyou"},{"5":"棋","(5)":"ki"},{"6":"極","(6)":"kyoku"},{"7":"玉","(7)":"tama"},{"8":"巾","(8)":"haba"},{"9":"斤","(9)":"kin"},{"0":"均","(0)":"hitoshi"}],
+    [{"1":"近","(1)":"chika"},{"2":"糾","(2)":"kyuu"},{"3":"結","(3)":"ketsu"},{"4":"勤","(4)":"tsutomu"},{"5":"琴","(5)":"koto"},{"6":"筋","(6)":"suji"},{"7":"閑","(7)":"kan"},{"8":"禁","(8)":"kin"},{"9":"語","(9)":"go"},{"0":"錦","(0)":"nishiki"}],
+    [{"1":"謹","(1)":"kin"},{"2":"襟","(2)":"eri"},{"3":"艦","(3)":"kan"},{"4":"銀","(4)":"gin"},{"5":"稼","(5)":"ka"},{"6":"欺","(6)":"gi"},{"7":"計","(7)":"kei"},{"8":"駆","(8)":"ku"},{"9":"具","(9)":"gu"},{"0":"擬","(0)":"gi"}],
+    [{"1":"愚","(1)":"gu"},{"2":"空","(2)":"kuu"},{"3":"韓","(3)":"kan"},{"4":"寮","(4)":"ryou"},{"5":"隅","(5)":"sumi"},{"6":"串","(6)":"kushi"},{"7":"倹","(7)":"ken"},{"8":"掘","(8)":"kutsu"},{"9":"機","(9)":"ki"},{"0":"熊","(0)":"kuma"}],
+    [{"1":"繰","(1)":"kuri"},{"2":"君","(2)":"kimiyo"},{"3":"訓","(3)":"kawano"},{"4":"勲","(4)":"isao"},{"5":"薫","(5)":"kaori"},{"6":"軍","(6)":"kano"},{"7":"郡","(7)":"koori"},{"8":"群","(8)":"gun"},{"9":"兄","(9)":"ani"},{"0":"刑","(0)":"kei"}],
+    [{"1":"県","(1)":"ken"},{"2":"系","(2)":"kii"},{"3":"現","(3)":"gen"},{"4":"茎","(4)":"kuki"},{"5":"係","(5)":"gakari"},{"6":"型","(6)":"gata"},{"7":"庫","(7)":"ko"},{"8":"苦","(8)":"ku"},{"9":"恵","(9)":"megumu"},{"0":"啓","(0)":"kei"}],
+    [{"1":"検","(1)":"ken"},{"2":"曲","(2)":"kyoku"},{"3":"経","(3)":"kyou"},{"4":"蛍","(4)":"hotaru"},{"5":"練","(5)":"ren"},{"6":"好","(6)":"kou"},{"7":"故","(7)":"ko"},{"8":"才","(8)":"sai"},{"9":"喜","(9)":"ki"},{"0":"継","(0)":"kei"}],
+    [{"1":"向","(1)":"kou"},{"2":"享","(2)":"kyou"},{"3":"去","(3)":"kyo"},{"4":"娯","(4)":"go"},{"5":"穀","(5)":"koku"},{"6":"警","(6)":"kei"},{"7":"鶏","(7)":"niwatori"},{"8":"芸","(8)":"gei"},{"9":"迎","(9)":"mukai"},{"0":"鯨","(0)":"kujira"}],
+    [{"1":"隙","(1)":"suki"},{"2":"劇","(2)":"geki"},{"3":"景","(3)":"kei"},{"4":"球","(4)":"kyuu"},{"5":"桁","(5)":"keta"},{"6":"香","(6)":"kou"},{"7":"穴","(7)":"ana"},{"8":"血","(8)":"ketsu"},{"9":"恐","(9)":"kyou"},{"0":"環","(0)":"kan"}],
+    [{"1":"傑","(1)":"ketsu"},{"2":"叫","(2)":"kyou"},{"3":"月","(3)":"tsuki"},{"4":"犬","(4)":"inu"},{"5":"坑","(5)":"kou"},{"6":"見","(6)":"mi"},{"7":"傲","(7)":"gou"},{"8":"肩","(8)":"kata"},{"9":"建","(9)":"date"},{"0":"研","(0)":"ken"}],
+    [{"1":"形","(1)":"kei"},{"2":"許","(2)":"kyo"},{"3":"豪","(3)":"gou"},{"4":"酵","(4)":"kou"},{"5":"査","(5)":"sa"},{"6":"恭","(6)":"kyou"},{"7":"彩","(7)":"sai"},{"8":"険","(8)":"ken"},{"9":"厳","(9)":"gen"},{"0":"債","(0)":"sai"}],
+    [{"1":"掲","(1)":"kei"},{"2":"嫌","(2)":"iya"},{"3":"館","(3)":"kan"},{"4":"絹","(4)":"kinu"},{"5":"孔","(5)":"kou"},{"6":"権","(6)":"gonnai"},{"7":"合","(7)":"gou"},{"8":"困","(8)":"kon"},{"9":"謙","(9)":"ken"},{"0":"鍵","(0)":"kagi"}],
+    [{"1":"繭","(1)":"mayu"},{"2":"講","(2)":"kou"},{"3":"佐","(3)":"sa"},{"4":"懸","(4)":"ken"},{"5":"元","(5)":"moto"},{"6":"幻","(6)":"maboroshi"},{"7":"再","(7)":"sai"},{"8":"協","(8)":"kyou"},{"9":"弦","(9)":"tsuru"},{"0":"限","(0)":"gen"}],
+    [{"1":"原","(1)":"hara"},{"2":"径","(2)":"kei"},{"3":"拘","(3)":"kou"},{"4":"減","(4)":"gen"},{"5":"源","(5)":"minamoto"},{"6":"圏","(6)":"ken"},{"7":"己","(7)":"onore"},{"8":"戸","(8)":"to"},{"9":"古","(9)":"furu"},{"0":"競","(0)":"kyou"}],
+    [{"1":"孝","(1)":"kou"},{"2":"股","(2)":"mata"},{"3":"虎","(3)":"tora"},{"4":"挙","(4)":"kyo"},{"5":"況","(5)":"kyou"},{"6":"恨","(6)":"kon"},{"7":"枯","(7)":"kare"},{"8":"個","(8)":"ko"},{"9":"契","(9)":"kei"},{"0":"湖","(0)":"megami"}],
+    [{"1":"雇","(1)":"yatoi"},{"2":"誇","(2)":"ko"},{"3":"鼓","(3)":"tsuzumi"},{"4":"錮","(4)":"gu"},{"5":"顧","(5)":"kari"},{"6":"考","(6)":"kou"},{"7":"験","(7)":"ken"},{"8":"憩","(8)":"kei"},{"9":"呉","(9)":"kure"},{"0":"後","(0)":"go"}],
+    [{"1":"稽","(1)":"kei"},{"2":"脅","(2)":"kyou"},{"3":"唆","(3)":"sa"},{"4":"及","(4)":"kyuu"},{"5":"誤","(5)":"go"},{"6":"護","(6)":"mamoru"},{"7":"口","(7)":"guchi"},{"8":"采","(8)":"sai"},{"9":"公","(9)":"kou"},{"0":"勾","(0)":"magari"}],
+    [{"1":"遣","(1)":"ken"},{"2":"鎖","(2)":"sa"},{"3":"巧","(3)":"takumi"},{"4":"広","(4)":"hirouji"},{"5":"最","(5)":"sai"},{"6":"昆","(6)":"kon"},{"7":"光","(7)":"hikari"},{"8":"詣","(8)":"kei"},{"9":"后","(9)":"kou"},{"0":"凶","(0)":"kyou"}],
+    [{"1":"江","(1)":"e"},{"2":"五","(2)":"go"},{"3":"行","(3)":"gyou"},{"4":"件","(4)":"ken"},{"5":"固","(5)":"ko"},{"6":"載","(6)":"sai"},{"7":"策","(7)":"saku"},{"8":"更","(8)":"sara"},{"9":"効","(9)":"kou"},{"0":"幸","(0)":"sachi"}],
+    [{"1":"矯","(1)":"kyou"},{"2":"憲","(2)":"ken"},{"3":"侯","(3)":"cai"},{"4":"厚","(4)":"atsu"},{"5":"恒","(5)":"hosokawa"},{"6":"刷","(6)":"satsu"},{"7":"皇","(7)":"kou"},{"8":"紅","(8)":"beni"},{"9":"荒","(9)":"ara"},{"0":"仕","(0)":"shi"}],
+    [{"1":"欠","(1)":"ketsu"},{"2":"惨","(2)":"san"},{"3":"刹","(3)":"satsu"},{"4":"残","(4)":"zan"},{"5":"肢","(5)":"shi"},{"6":"貢","(6)":"mitsugu"},{"7":"至","(7)":"shi"},{"8":"高","(8)":"takaie"},{"9":"康","(9)":"yasushi"},{"0":"控","(0)":"kou"}],
+    [{"1":"採","(1)":"sai"},{"2":"黄","(2)":"ki"},{"3":"参","(3)":"san"},{"4":"撮","(4)":"satsu"},{"5":"港","(5)":"minato"},{"6":"作","(6)":"saku"},{"7":"絞","(7)":"shibori"},{"8":"思","(8)":"shi"},{"9":"溝","(9)":"mizo"},{"0":"鉱","(0)":"kou"}],
+    [{"1":"宰","(1)":"sai"},{"2":"綱","(2)":"tsuna"},{"3":"察","(3)":"satsu"},{"4":"昨","(4)":"saku"},{"5":"興","(5)":"kyou"},{"6":"衡","(6)":"hira"},{"7":"鋼","(7)":"hagane"},{"8":"顕","(8)":"ken"},{"9":"購","(9)":"kou"},{"0":"乞","(0)":"ko"}],
+    [{"1":"号","(1)":"g"},{"2":"肯","(2)":"kou"},{"3":"酸","(3)":"san"},{"4":"剛","(4)":"gou"},{"5":"柵","(5)":"saku"},{"6":"兼","(6)":"ken"},{"7":"克","(7)":"kotsu"},{"8":"告","(8)":"tsuge"},{"9":"谷","(9)":"tani"},{"0":"刻","(0)":"koku"}],
+    [{"1":"国","(1)":"kuni"},{"2":"黒","(2)":"kuroi"},{"3":"午","(3)":"go"},{"4":"酷","(4)":"koku"},{"5":"獄","(5)":"goku"},{"6":"骨","(6)":"khotsa"},{"7":"駒","(7)":"koma"},{"8":"込","(8)":"komi"},{"9":"頃","(9)":"koro"},{"0":"今","(0)":"ima"}],
+    [{"1":"賢","(1)":"ken"},{"2":"交","(2)":"kou"},{"3":"軽","(3)":"kei"},{"4":"根","(4)":"ne"},{"5":"冊","(5)":"satsu"},{"6":"産","(6)":"san"},{"7":"痕","(7)":"ato"},{"8":"紺","(8)":"kon"},{"9":"魂","(9)":"tamashii"},{"0":"墾","(0)":"khom"}],
+    [{"1":"懇","(1)":"kon"},{"2":"左","(2)":"hidari"},{"3":"敬","(3)":"kei"},{"4":"沙","(4)":"sha"},{"5":"拳","(5)":"ken"},{"6":"砂","(6)":"suna"},{"7":"供","(7)":"kyou"},{"8":"差","(8)":"shisa"},{"9":"詐","(9)":"sa"},{"0":"功","(0)":"kou"}],
+    [{"1":"座","(1)":"za"},{"2":"挫","(2)":"kuji"},{"3":"傾","(3)":"kei"},{"4":"玄","(4)":"gen"},{"5":"算","(5)":"san"},{"6":"妻","(6)":"tsuma"},{"7":"史","(7)":"shi"},{"8":"砕","(8)":"sai"},{"9":"構","(9)":"kou"},{"0":"財","(0)":"zai"}],
+    [{"1":"死","(1)":"shi"},{"2":"梗","(2)":"kou"},{"3":"済","(3)":"sayama"},{"4":"祭","(4)":"matsuri"},{"5":"斎","(5)":"itsuki"},{"6":"細","(6)":"boso"},{"7":"菜","(7)":"na"},{"8":"狭","(8)":"kyou"},{"9":"裁","(9)":"sai"},{"0":"堅","(0)":"ken"}],
+    [{"1":"辞","(1)":"ji"},{"2":"塞","(2)":"soku"},{"3":"歳","(3)":"toshi"},{"4":"抗","(4)":"kou"},{"5":"詞","(5)":"shi"},{"6":"式","(6)":"shiki"},{"7":"捨","(7)":"sha"},{"8":"材","(8)":"zai"},{"9":"尺","(9)":"shaku"},{"0":"栽","(0)":"sai"}],
+    [{"1":"罪","(1)":"zai"},{"2":"崎","(2)":"saki"},{"3":"資","(3)":"shi"},{"4":"事","(4)":"ji"},{"5":"種","(5)":"shu"},{"6":"券","(6)":"ken"},{"7":"需","(7)":"ju"},{"8":"攻","(8)":"kou"},{"9":"酢","(9)":"su"},{"0":"搾","(0)":"saku"}],
+    [{"1":"錯","(1)":"saku"},{"2":"咲","(2)":"saki"},{"3":"婚","(3)":"kon"},{"4":"札","(4)":"fuda"},{"5":"呪","(5)":"ju"},{"6":"趣","(6)":"shu"},{"7":"州","(7)":"shuu"},{"8":"殺","(8)":"satsu"},{"9":"剣","(9)":"ken"},{"0":"慌","(0)":"kou"}],
+    [{"1":"擦","(1)":"satsu"},{"2":"雑","(2)":"zatsu"},{"3":"皿","(3)":"sara"},{"4":"示","(4)":"ji"},{"5":"山","(5)":"yama"},{"6":"室","(6)":"shitsu"},{"7":"歯","(7)":"shi"},{"8":"蚕","(8)":"san"},{"9":"候","(9)":"kou"},{"0":"混","(0)":"kon"}],
+    [{"1":"傘","(1)":"kasa"},{"2":"疾","(2)":"shitsu"},{"3":"令","(3)":"rei"},{"4":"拷","(4)":"gou"},{"5":"賛","(5)":"san"},{"6":"耕","(6)":"kou"},{"7":"爵","(7)":"shaku"},{"8":"暫","(8)":"zan"},{"9":"士","(9)":"shi"},{"0":"子","(0)":"ko"}],
+    [{"1":"就","(1)":"shuu"},{"2":"児","(2)":"ji"},{"3":"湿","(3)":"shitsu"},{"4":"斜","(4)":"sha"},{"5":"工","(5)":"kou"},{"6":"催","(6)":"sai"},{"7":"柔","(7)":"juu"},{"8":"市","(8)":"shi"},{"9":"矢","(9)":"ya"},{"0":"旨","(0)":"mune"}],
+    [{"1":"健","(1)":"ken"},{"2":"糸","(2)":"ito"},{"3":"降","(3)":"kou"},{"4":"礼","(4)":"rei"},{"5":"借","(5)":"shaku"},{"6":"私","(6)":"watashi"},{"7":"羞","(7)":"shuu"},{"8":"刺","(8)":"sashi"},{"9":"始","(9)":"shi"},{"0":"姉","(0)":"ane"}],
+    [{"1":"枝","(1)":"eda"},{"2":"宗","(2)":"shuu"},{"3":"銃","(3)":"juu"},{"4":"姿","(4)":"sugata"},{"5":"項","(5)":"kou"},{"6":"指","(6)":"yubi"},{"7":"粛","(7)":"shuku"},{"8":"殉","(8)":"jun"},{"9":"樹","(9)":"ju"},{"0":"紙","(0)":"shi"}],
+    [{"1":"脂","(1)":"abura"},{"2":"愁","(2)":"shuu"},{"3":"紫","(3)":"murasaki"},{"4":"際","(4)":"sai"},{"5":"桟","(5)":"san"},{"6":"嗣","(6)":"tsugu"},{"7":"試","(7)":"shi"},{"8":"写","(8)":"sha"},{"9":"硬","(9)":"kou"},{"0":"飼","(0)":"kau"}],
+    [{"1":"助","(1)":"jo"},{"2":"雌","(2)":"mesu"},{"3":"召","(3)":"shou"},{"4":"賜","(4)":"tama"},{"5":"諮","(5)":"shi"},{"6":"三","(6)":"san"},{"7":"稿","(7)":"kou"},{"8":"寺","(8)":"tera"},{"9":"次","(9)":"ji"},{"0":"耳","(0)":"mimi"}],
+    [{"1":"酬","(1)":"shuu"},{"2":"似","(2)":"ni"},{"3":"詩","(3)":"shi"},{"4":"削","(4)":"saku"},{"5":"侍","(5)":"samurai"},{"6":"治","(6)":"osamu"},{"7":"持","(7)":"mochi"},{"8":"従","(8)":"juu"},{"9":"滋","(9)":"shigeru"},{"0":"慈","(0)":"ji"}],
+    [{"1":"司","(1)":"shi"},{"2":"匠","(2)":"shou"},{"3":"餌","(3)":"esa"},{"4":"璽","(4)":"ji"},{"5":"鹿","(5)":"shika"},{"6":"埼","(6)":"sai"},{"7":"識","(7)":"shiki"},{"8":"軸","(8)":"jiku"},{"9":"七","(9)":"nana"},{"0":"𠮟","(0)":"hiroshi"}],
+    [{"1":"遮","(1)":"sha"},{"2":"喉","(2)":"kou"},{"3":"散","(3)":"san"},{"4":"執","(4)":"shuu"},{"5":"氏","(5)":"shi"},{"6":"旬","(6)":"jun"},{"7":"漆","(7)":"urushi"},{"8":"質","(8)":"shitsu"},{"9":"実","(9)":"jitsu"},{"0":"芝","(0)":"shiba"}],
+    [{"1":"止","(1)":"shi"},{"2":"周","(2)":"shuu"},{"3":"序","(3)":"jo"},{"4":"緒","(4)":"sho"},{"5":"者","(5)":"mono"},{"6":"珠","(6)":"ju"},{"7":"在","(7)":"zai"},{"8":"赦","(8)":"sha"},{"9":"郊","(9)":"kou"},{"0":"煮","(0)":"ni"}],
+    [{"1":"失","(1)":"shitsu"},{"2":"謝","(2)":"sha"},{"3":"邪","(3)":"ja"},{"4":"蛇","(4)":"hebi"},{"5":"剤","(5)":"zai"},{"6":"志","(6)":"shi"},{"7":"主","(7)":"shu"},{"8":"釈","(8)":"shaku"},{"9":"斬","(9)":"zan"},{"0":"若","(0)":"waka"}],
+    [{"1":"弱","(1)":"jaku"},{"2":"寂","(2)":"sabi"},{"3":"手","(3)":"te"},{"4":"酌","(4)":"shaku"},{"5":"守","(5)":"mori"},{"6":"朱","(6)":"shu"},{"7":"取","(7)":"tori"},{"8":"狩","(8)":"kari"},{"9":"首","(9)":"kubi"},{"0":"殊","(0)":"ju"}],
+    [{"1":"射","(1)":"sha"},{"2":"酒","(2)":"sake"},{"3":"腫","(3)":"shu"},{"4":"字","(4)":"ji"},{"5":"淑","(5)":"shuku"},{"6":"寿","(6)":"hisashi"},{"7":"受","(7)":"uke"},{"8":"洪","(8)":"kou"},{"9":"授","(9)":"ju"},{"0":"索","(0)":"saku"}],
+    [{"1":"儒","(1)":"ju"},{"2":"巡","(2)":"jun"},{"3":"飾","(3)":"shoku"},{"4":"蒸","(4)":"jou"},{"5":"拶","(5)":"satsu"},{"6":"舟","(6)":"funa"},{"7":"叙","(7)":"jo"},{"8":"社","(8)":"sha"},{"9":"祉","(9)":"shi"},{"0":"拾","(0)":"shuu"}],
+    [{"1":"秋","(1)":"aki"},{"2":"術","(2)":"jutsu"},{"3":"修","(3)":"osamu"},{"4":"袖","(4)":"sode"},{"5":"書","(5)":"sho"},{"6":"順","(6)":"jun"},{"7":"笑","(7)":"shou"},{"8":"状","(8)":"jou"},{"9":"支","(9)":"shi"},{"0":"衆","(0)":"shuu"}],
+    [{"1":"心","(1)":"shin"},{"2":"視","(2)":"shi"},{"3":"列","(3)":"retsu"},{"4":"尽","(4)":"jin"},{"5":"蹴","(5)":"kke"},{"6":"襲","(6)":"shuu"},{"7":"炊","(7)":"sui"},{"8":"汁","(8)":"shiru"},{"9":"充","(9)":"mitsuru"},{"0":"住","(0)":"juu"}],
+    [{"1":"四","(1)":"mune"},{"2":"重","(2)":"juu"},{"3":"時","(3)":"ji"},{"4":"渋","(4)":"shibu"},{"5":"航","(5)":"kou"},{"6":"迅","(6)":"jin"},{"7":"縦","(7)":"tate"},{"8":"叔","(8)":"shuu"},{"9":"祝","(9)":"shuku"},{"0":"宿","(0)":"yado"}],
+    [{"1":"校","(1)":"kou"},{"2":"施","(2)":"shi"},{"3":"縮","(3)":"shuku"},{"4":"塾","(4)":"juku"},{"5":"熟","(5)":"tsukudzuku"},{"6":"出","(6)":"de"},{"7":"述","(7)":"jutsu"},{"8":"臭","(8)":"shuu"},{"9":"俊","(9)":"shun"},{"0":"春","(0)":"haru"}],
+    [{"1":"瞬","(1)":"shun"},{"2":"嫉","(2)":"shitsu"},{"3":"伸","(3)":"shin"},{"4":"盾","(4)":"tate"},{"5":"処","(5)":"sho"},{"6":"師","(6)":"shi"},{"7":"殖","(7)":"shoku"},{"8":"壌","(8)":"jou"},{"9":"使","(9)":"shi"},{"0":"準","(0)":"jun"}],
+    [{"1":"商","(1)":"shou"},{"2":"遵","(2)":"zun"},{"3":"准","(3)":"jun"},{"4":"初","(4)":"hatsue"},{"5":"所","(5)":"showa"},{"6":"終","(6)":"shuu"},{"7":"甚","(7)":"jin"},{"8":"随","(8)":"zui"},{"9":"署","(9)":"sho"},{"0":"舎","(0)":"sha"}],
+    [{"1":"諸","(1)":"moro"},{"2":"女","(2)":"onna"},{"3":"如","(3)":"nyo"},{"4":"誌","(4)":"shi"},{"5":"車","(5)":"sha"},{"6":"秀","(6)":"shuu"},{"7":"徐","(7)":"soh"},{"8":"除","(8)":"jo"},{"9":"小","(9)":"shou"},{"0":"升","(0)":"masu"}],
+    [{"1":"食","(1)":"shoku"},{"2":"摯","(2)":"shi"},{"3":"磁","(3)":"ji"},{"4":"床","(4)":"yuka"},{"5":"深","(5)":"shin"},{"6":"嬢","(6)":"jou"},{"7":"斉","(7)":"sei"},{"8":"績","(8)":"seki"},{"9":"承","(9)":"shou"},{"0":"昇","(0)":"nobori"}],
+    [{"1":"松","(1)":"matsu"},{"2":"沼","(2)":"numa"},{"3":"昭","(3)":"akira"},{"4":"宵","(4)":"yoi"},{"5":"慎","(5)":"shin"},{"6":"仁","(6)":"jin"},{"7":"正","(7)":"sei"},{"8":"祥","(8)":"shih"},{"9":"称","(9)":"shou"},{"0":"習","(0)":"shuu"}],
+    [{"1":"信","(1)":"shin"},{"2":"潤","(2)":"jun"},{"3":"酔","(3)":"sui"},{"4":"生","(4)":"sei"},{"5":"設","(5)":"setsu"},{"6":"造","(6)":"zou"},{"7":"勝","(7)":"shou"},{"8":"掌","(8)":"tenohira"},{"9":"晶","(9)":"akira"},{"0":"焼","(0)":"yaki"}],
+    [{"1":"針","(1)":"shin"},{"2":"族","(2)":"zoku"},{"3":"触","(3)":"shoku"},{"4":"制","(4)":"sei"},{"5":"調","(5)":"chou"},{"6":"層","(6)":"sou"},{"7":"煎","(7)":"sen"},{"8":"奨","(8)":"susumu"},{"9":"猛","(9)":"mou"},{"0":"詳","(0)":"shou"}],
+    [{"1":"彰","(1)":"akira"},{"2":"店","(2)":"ten"},{"3":"適","(3)":"teki"},{"4":"判","(4)":"ban"},{"5":"注","(5)":"chuu"},{"6":"帥","(6)":"sui"},{"7":"礁","(7)":"shou"},{"8":"鐘","(8)":"kane"},{"9":"上","(9)":"ue"},{"0":"丈","(0)":"take"}],
+    [{"1":"臣","(1)":"shin"},{"2":"請","(2)":"sei"},{"3":"週","(3)":"shuu"},{"4":"戚","(4)":"seki"},{"5":"拙","(5)":"setsu"},{"6":"阻","(6)":"so"},{"7":"賊","(7)":"zoku"},{"8":"常","(8)":"tsune"},{"9":"情","(9)":"jou"},{"0":"場","(0)":"ba"}],
+    [{"1":"睡","(1)":"sui"},{"2":"囚","(2)":"shuu"},{"3":"縄","(3)":"nawa"},{"4":"循","(4)":"jun"},{"5":"肖","(5)":"shou"},{"6":"奏","(6)":"sou"},{"7":"着","(7)":"chaku"},{"8":"醸","(8)":"jou"},{"9":"色","(9)":"iro"},{"0":"拭","(0)":"nugui"}],
+    [{"1":"責","(1)":"seki"},{"2":"践","(2)":"sen"},{"3":"純","(3)":"jun"},{"4":"収","(4)":"shuu"},{"5":"粧","(5)":"shou"},{"6":"新","(6)":"shin"},{"7":"織","(7)":"ori"},{"8":"職","(8)":"shoku"},{"9":"辱","(9)":"joku"},{"0":"尻","(0)":"shiri"}],
+    [{"1":"集","(1)":"shuu"},{"2":"席","(2)":"seki"},{"3":"恣","(3)":"shi"},{"4":"冗","(4)":"jou"},{"5":"羨","(5)":"sen"},{"6":"身","(6)":"mi"},{"7":"辛","(7)":"kara"},{"8":"侵","(8)":"shin"},{"9":"唱","(9)":"shou"},{"0":"津","(0)":"tsu"}],
+    [{"1":"神","(1)":"kami"},{"2":"唇","(2)":"kuchibiru"},{"3":"清","(3)":"sei"},{"4":"祖","(4)":"so"},{"5":"多","(5)":"ta"},{"6":"真","(6)":"ma"},{"7":"像","(7)":"zou"},{"8":"抄","(8)":"shou"},{"9":"聴","(9)":"chou"},{"0":"霊","(0)":"rei"}],
+    [{"1":"森","(1)":"moriai"},{"2":"償","(2)":"shou"},{"3":"寝","(3)":"ne"},{"4":"将","(4)":"shou"},{"5":"嘱","(5)":"shoku"},{"6":"牲","(6)":"sei"},{"7":"脊","(7)":"seki"},{"8":"薪","(8)":"takigi"},{"9":"親","(9)":"oya"},{"0":"人","(0)":"hito"}],
+    [{"1":"刃","(1)":"ba"},{"2":"消","(2)":"shou"},{"3":"醜","(3)":"shuu"},{"4":"獣","(4)":"juu"},{"5":"庶","(5)":"sho"},{"6":"陣","(6)":"jin"},{"7":"尋","(7)":"hiroshi"},{"8":"腎","(8)":"jin"},{"9":"須","(9)":"su"},{"0":"図","(0)":"zu"}],
+    [{"1":"水","(1)":"mizu"},{"2":"吹","(2)":"buki"},{"3":"垂","(3)":"shide"},{"4":"十","(4)":"juu"},{"5":"診","(5)":"shin"},{"6":"粋","(6)":"iki"},{"7":"訟","(7)":"shou"},{"8":"推","(8)":"sui"},{"9":"繕","(9)":"zen"},{"0":"遂","(0)":"tsui"}],
+    [{"1":"畳","(1)":"jou"},{"2":"穂","(2)":"ho"},{"3":"暑","(3)":"sho"},{"4":"髄","(4)":"zui"},{"5":"枢","(5)":"kusuru"},{"6":"崇","(6)":"takahashi"},{"7":"数","(7)":"suu"},{"8":"据","(8)":"su"},{"9":"杉","(9)":"sugi"},{"0":"裾","(0)":"suso"}],
+    [{"1":"寸","(1)":"sun"},{"2":"瀬","(2)":"se"},{"3":"是","(3)":"ze"},{"4":"井","(4)":"i"},{"5":"世","(5)":"yo"},{"6":"症","(6)":"shou"},{"7":"潜","(7)":"sen"},{"8":"成","(8)":"sei"},{"9":"西","(9)":"nishi"},{"0":"声","(0)":"koe"}],
+    [{"1":"製","(1)":"sei"},{"2":"誓","(2)":"chikau"},{"3":"静","(3)":"shizu"},{"4":"条","(4)":"jou"},{"5":"照","(5)":"shou"},{"6":"醒","(6)":"sai"},{"7":"税","(7)":"zei"},{"8":"夕","(8)":"yuu"},{"9":"斥","(9)":"seki"},{"0":"石","(0)":"ishi"}],
+    [{"1":"凄","(1)":"sugo"},{"2":"措","(2)":"so"},{"3":"娠","(3)":"shin"},{"4":"盛","(4)":"mori"},{"5":"婿","(5)":"muko"},{"6":"晴","(6)":"hare"},{"7":"勢","(7)":"zei"},{"8":"聖","(8)":"sei"},{"9":"誠","(9)":"makoto"},{"0":"禅","(0)":"zen"}],
+    [{"1":"赤","(1)":"aka"},{"2":"昔","(2)":"mukashi"},{"3":"粗","(3)":"so"},{"4":"申","(4)":"shin"},{"5":"震","(5)":"shin"},{"6":"然","(6)":"zen"},{"7":"惜","(7)":"seki"},{"8":"乗","(8)":"jou"},{"9":"少","(9)":"shou"},{"0":"跡","(0)":"ato"}],
+    [{"1":"全","(1)":"zen"},{"2":"紹","(2)":"shou"},{"3":"切","(3)":"kiri"},{"4":"折","(4)":"ori"},{"5":"城","(5)":"jou"},{"6":"雪","(6)":"yuki"},{"7":"姓","(7)":"sei"},{"8":"籍","(8)":"seki"},{"9":"租","(9)":"so"},{"0":"接","(0)":"setsu"}],
+    [{"1":"摂","(1)":"setsu"},{"2":"尚","(2)":"shou"},{"3":"専","(3)":"sen"},{"4":"疎","(4)":"so"},{"5":"青","(5)":"ao"},{"6":"星","(6)":"hoshi"},{"7":"審","(7)":"shin"},{"8":"積","(8)":"seki"},{"9":"膳","(9)":"zen"},{"0":"政","(0)":"sei"}],
+    [{"1":"捜","(1)":"sou"},{"2":"占","(2)":"sen"},{"3":"先","(3)":"saki"},{"4":"舌","(4)":"shita"},{"5":"絶","(5)":"zetsu"},{"6":"川","(6)":"kawa"},{"7":"仙","(7)":"senna"},{"8":"訴","(8)":"so"},{"9":"説","(9)":"setsu"},{"0":"性","(0)":"shou"}],
+    [{"1":"塑","(1)":"so"},{"2":"掃","(2)":"sou"},{"3":"臓","(3)":"zou"},{"4":"促","(4)":"soku"},{"5":"船","(5)":"sen"},{"6":"染","(6)":"some"},{"7":"扇","(7)":"ougi"},{"8":"泉","(8)":"izumi"},{"9":"浅","(9)":"asa"},{"0":"省","(0)":"shou"}],
+    [{"1":"装","(1)":"sou"},{"2":"章","(2)":"shou"},{"3":"続","(3)":"zoku"},{"4":"箋","(4)":"sen"},{"5":"線","(5)":"shima"},{"6":"芯","(6)":"shin"},{"7":"植","(7)":"shoku"},{"8":"銭","(8)":"zeni"},{"9":"戦","(9)":"ikusa"},{"0":"征","(0)":"sei"}],
+    [{"1":"漸","(1)":"zen"},{"2":"腺","(2)":"sen"},{"3":"属","(3)":"zoku"},{"4":"狙","(4)":"so"},{"5":"浄","(5)":"jou"},{"6":"振","(6)":"shin"},{"7":"逝","(7)":"sei"},{"8":"析","(8)":"seki"},{"9":"渉","(9)":"shou"},{"0":"窃","(0)":"setsu"}],
+    [{"1":"僧","(1)":"sou"},{"2":"繊","(2)":"sen"},{"3":"損","(3)":"son"},{"4":"招","(4)":"shou"},{"5":"善","(5)":"zen"},{"6":"隻","(6)":"seki"},{"7":"精","(7)":"sei"},{"8":"遷","(8)":"sima"},{"9":"薦","(9)":"somo"},{"0":"前","(0)":"mae"}],
+    [{"1":"組","(1)":"gumi"},{"2":"詔","(2)":"shou"},{"3":"早","(3)":"haya"},{"4":"節","(4)":"setsu"},{"5":"宣","(5)":"sen"},{"6":"捉","(6)":"soku"},{"7":"礎","(7)":"so"},{"8":"対","(8)":"tai"},{"9":"第","(9)":"dai"},{"0":"争","(0)":"sou"}],
+    [{"1":"霜","(1)":"shimo"},{"2":"騒","(2)":"sou"},{"3":"藻","(3)":"mo"},{"4":"衰","(4)":"sui"},{"5":"焦","(5)":"shou"},{"6":"憎","(6)":"niku"},{"7":"蔵","(7)":"kura"},{"8":"大","(8)":"dai"},{"9":"栓","(9)":"sen"},{"0":"増","(0)":"zou"}],
+    [{"1":"俗","(1)":"zoku"},{"2":"詮","(2)":"sen"},{"3":"素","(3)":"so"},{"4":"硝","(4)":"shou"},{"5":"剰","(5)":"jou"},{"6":"卒","(6)":"sotsu"},{"7":"率","(7)":"ritsu"},{"8":"存","(8)":"zon"},{"9":"村","(9)":"mura"},{"0":"孫","(0)":"mago"}],
+    [{"1":"錠","(1)":"jou"},{"2":"桑","(2)":"kuwa"},{"3":"荘","(3)":"shou"},{"4":"草","(4)":"kusa"},{"5":"倉","(5)":"kura"},{"6":"千","(6)":"sen"},{"7":"堆","(7)":"tai"},{"8":"即","(8)":"soku"},{"9":"送","(9)":"sou"},{"0":"嘆","(0)":"tan"}],
+    [{"1":"巣","(1)":"su"},{"2":"曽","(2)":"so"},{"3":"爽","(3)":"sawa"},{"4":"窓","(4)":"mado"},{"5":"喪","(5)":"mo"},{"6":"痩","(6)":"sa"},{"7":"洗","(7)":"sen"},{"8":"卓","(8)":"taku"},{"9":"端","(9)":"tan"},{"0":"葬","(0)":"sou"}],
+    [{"1":"則","(1)":"soku"},{"2":"象","(2)":"shou"},{"3":"妥","(3)":"da"},{"4":"託","(4)":"taku"},{"5":"炭","(5)":"tan"},{"6":"壇","(6)":"dan"},{"7":"痴","(7)":"chi"},{"8":"踪","(8)":"sou"},{"9":"操","(9)":"misao"},{"0":"選","(0)":"sen"}],
+    [{"1":"挿","(1)":"sou"},{"2":"傷","(2)":"shou"},{"3":"測","(3)":"soku"},{"4":"側","(4)":"gawa"},{"5":"束","(5)":"taba"},{"6":"息","(6)":"iki"},{"7":"足","(7)":"ashi"},{"8":"速","(8)":"haya"},{"9":"旋","(9)":"sen"},{"0":"遡","(0)":"so"}],
+    [{"1":"尊","(1)":"son"},{"2":"鮮","(2)":"sen"},{"3":"遜","(3)":"xun"},{"4":"他","(4)":"hoka"},{"5":"浸","(5)":"shin"},{"6":"汰","(6)":"ta"},{"7":"唾","(7)":"tsuba"},{"8":"短","(8)":"tan"},{"9":"想","(9)":"sou"},{"0":"堕","(0)":"da"}],
+    [{"1":"惰","(1)":"da"},{"2":"駄","(2)":"dada"},{"3":"太","(3)":"ta"},{"4":"双","(4)":"sou"},{"5":"丹","(5)":"tan"},{"6":"代","(6)":"dai"},{"7":"拓","(7)":"taku"},{"8":"弾","(8)":"dan"},{"9":"遅","(9)":"chi"},{"0":"退","(0)":"tai"}],
+    [{"1":"中","(1)":"naka"},{"2":"走","(2)":"sou"},{"3":"忠","(3)":"chuu"},{"4":"弔","(4)":"chou"},{"5":"帯","(5)":"tai"},{"6":"替","(6)":"kawa"},{"7":"貸","(7)":"kashi"},{"8":"隊","(8)":"th"},{"9":"泰","(9)":"yasushi"},{"0":"袋","(0)":"fukuro"}],
+    [{"1":"戴","(1)":"dai"},{"2":"耐","(2)":"tai"},{"3":"台","(3)":"dai"},{"4":"諾","(4)":"daku"},{"5":"鍛","(5)":"tan"},{"6":"択","(6)":"taku"},{"7":"沢","(7)":"sawa"},{"8":"壮","(8)":"sou"},{"9":"贈","(9)":"zou"},{"0":"滝","(0)":"taki"}],
+    [{"1":"抽","(1)":"chuu"},{"2":"総","(2)":"sou"},{"3":"待","(3)":"tai"},{"4":"濯","(4)":"taku"},{"5":"題","(5)":"dai"},{"6":"濁","(6)":"daku"},{"7":"置","(7)":"chi"},{"8":"奪","(8)":"datsu"},{"9":"但","(9)":"tan"},{"0":"達","(0)":"tachi"}],
+    [{"1":"棚","(1)":"tana"},{"2":"誰","(2)":"dare"},{"3":"旦","(3)":"dan"},{"4":"遭","(4)":"sou"},{"5":"体","(5)":"tai"},{"6":"畜","(6)":"chiku"},{"7":"酎","(7)":"chuu"},{"8":"懲","(8)":"chou"},{"9":"沈","(9)":"chin"},{"0":"淡","(0)":"tan"}],
+    [{"1":"誕","(1)":"tan"},{"2":"宅","(2)":"taku"},{"3":"超","(3)":"chou"},{"4":"廷","(4)":"tei"},{"5":"断","(5)":"dan"},{"6":"男","(6)":"otoko"},{"7":"綻","(7)":"hokoro"},{"8":"打","(8)":"da"},{"9":"逮","(9)":"tai"},{"0":"曹","(0)":"sou"}],
+    [{"1":"怠","(1)":"tai"},{"2":"暖","(2)":"dan"},{"3":"長","(3)":"chou"},{"4":"逓","(4)":"tei"},{"5":"知","(5)":"chi"},{"6":"値","(6)":"atai"},{"7":"恥","(7)":"haji"},{"8":"談","(8)":"tan"},{"9":"池","(9)":"ike"},{"0":"槽","(0)":"sou"}],
+    [{"1":"胎","(1)":"tai"},{"2":"脱","(2)":"datsu"},{"3":"緻","(3)":"chi"},{"4":"担","(4)":"tan"},{"5":"燥","(5)":"sou"},{"6":"竹","(6)":"take"},{"7":"稚","(7)":"watsu"},{"8":"丁","(8)":"chou"},{"9":"珍","(9)":"chin"},{"0":"築","(0)":"chiku"}],
+    [{"1":"秩","(1)":"chin"},{"2":"窒","(2)":"chitsu"},{"3":"茶","(3)":"cha"},{"4":"譲","(4)":"jou"},{"5":"嫡","(5)":"chaku"},{"6":"虫","(6)":"mushi"},{"7":"沖","(7)":"oki"},{"8":"宙","(8)":"chuu"},{"9":"相","(9)":"sou"},{"0":"仲","(0)":"naka"}],
+    [{"1":"滞","(1)":"tai"},{"2":"創","(2)":"sou"},{"3":"単","(3)":"tan"},{"4":"駐","(4)":"chuu"},{"5":"賞","(5)":"shou"},{"6":"昼","(6)":"hiru"},{"7":"柱","(7)":"bashira"},{"8":"衷","(8)":"chu"},{"9":"鋳","(9)":"i"},{"0":"著","(0)":"cho"}],
+    [{"1":"逐","(1)":"chiku"},{"2":"定","(2)":"tei"},{"3":"地","(3)":"chi"},{"4":"滴","(4)":"teki"},{"5":"帳","(5)":"chou"},{"6":"整","(6)":"sei"},{"7":"町","(7)":"machi"},{"8":"貯","(8)":"cho"},{"9":"張","(9)":"hari"},{"0":"態","(0)":"tai"}],
+    [{"1":"眺","(1)":"naga"},{"2":"釣","(2)":"tsuri"},{"3":"鳥","(3)":"tori"},{"4":"朝","(4)":"asa"},{"5":"貼","(5)":"hari"},{"6":"団","(6)":"dan"},{"7":"低","(7)":"tei"},{"8":"怒","(8)":"do"},{"9":"逃","(9)":"tou"},{"0":"頂","(0)":"chou"}],
+    [{"1":"潮","(1)":"shio"},{"2":"証","(2)":"shou"},{"3":"紳","(3)":"shin"},{"4":"直","(4)":"jiki"},{"5":"勅","(5)":"choku"},{"6":"胆","(6)":"tan"},{"7":"停","(7)":"tei"},{"8":"天","(8)":"ten"},{"9":"伝","(9)":"den"},{"0":"捗","(0)":"chou"}],
+    [{"1":"探","(1)":"tan"},{"2":"蓄","(2)":"chiku"},{"3":"偵","(3)":"tei"},{"4":"朕","(4)":"chin"},{"5":"迭","(5)":"tetsu"},{"6":"点","(6)":"ten"},{"7":"墜","(7)":"tsui"},{"8":"陳","(8)":"chihyuan"},{"9":"鎮","(9)":"mamoru"},{"0":"通","(0)":"tsuu"}],
+    [{"1":"痛","(1)":"tsuu"},{"2":"塚","(2)":"takashi"},{"3":"漬","(3)":"zuke"},{"4":"坪","(4)":"tsubo"},{"5":"爪","(5)":"tsume"},{"6":"鶴","(6)":"tsuru"},{"7":"弟","(7)":"otouto"},{"8":"腸","(8)":"chou"},{"9":"呈","(9)":"tei"},{"0":"段","(0)":"dan"}],
+    [{"1":"庁","(1)":"chou"},{"2":"致","(2)":"chi"},{"3":"哲","(3)":"tetsu"},{"4":"典","(4)":"ten"},{"5":"斗","(5)":"to"},{"6":"貞","(6)":"saito"},{"7":"倒","(7)":"tou"},{"8":"訂","(8)":"tei"},{"9":"庭","(9)":"niwa"},{"0":"底","(0)":"soko"}],
+    [{"1":"徴","(1)":"chou"},{"2":"賃","(2)":"chin"},{"3":"党","(3)":"tou"},{"4":"銅","(4)":"dou"},{"5":"諦","(5)":"tei"},{"6":"堤","(6)":"tsutsumi"},{"7":"提","(7)":"hisage"},{"8":"程","(8)":"hodo"},{"9":"泥","(9)":"doro"},{"0":"的","(0)":"teki"}],
+    [{"1":"展","(1)":"ten"},{"2":"挑","(2)":"chou"},{"3":"敵","(3)":"teki"},{"4":"追","(4)":"tsui"},{"5":"抵","(5)":"tei"},{"6":"統","(6)":"tou"},{"7":"徹","(7)":"tetsu"},{"8":"笛","(8)":"fue"},{"9":"憧","(9)":"shou"},{"0":"溺","(0)":"deki"}],
+    [{"1":"嘲","(1)":"chou"},{"2":"邸","(2)":"tei"},{"3":"椎","(3)":"tsui"},{"4":"摘","(4)":"teki"},{"5":"吐","(5)":"to"},{"6":"転","(6)":"ten"},{"7":"塡","(7)":"hame"},{"8":"田","(8)":"ta"},{"9":"障","(9)":"shou"},{"0":"撤","(0)":"tetsu"}],
+    [{"1":"澄","(1)":"chou"},{"2":"電","(2)":"den"},{"3":"亭","(3)":"tei"},{"4":"添","(4)":"ten"},{"5":"悼","(5)":"tou"},{"6":"導","(6)":"dou"},{"7":"途","(7)":"to"},{"8":"都","(8)":"mizuho"},{"9":"渡","(9)":"wataru"},{"0":"殿","(0)":"dono"}],
+    [{"1":"塗","(1)":"nuri"},{"2":"賭","(2)":"to"},{"3":"土","(3)":"tsuchi"},{"4":"奴","(4)":"yatsu"},{"5":"努","(5)":"tsutomu"},{"6":"刀","(6)":"katana"},{"7":"冬","(7)":"fuyu"},{"8":"灯","(8)":"tou"},{"9":"度","(9)":"do"},{"0":"彫","(0)":"chou"}],
+    [{"1":"豆","(1)":"mame"},{"2":"島","(2)":"shima"},{"3":"東","(3)":"higashi"},{"4":"到","(4)":"itaru"},{"5":"跳","(5)":"chou"},{"6":"帝","(6)":"tei"},{"7":"認","(7)":"nin"},{"8":"毒","(8)":"doku"},{"9":"屯","(9)":"ton"},{"0":"唐","(0)":"tou"}],
+    [{"1":"桃","(1)":"momo"},{"2":"棟","(2)":"mune"},{"3":"軟","(3)":"nan"},{"4":"念","(4)":"nen"},{"5":"艇","(5)":"tei"},{"6":"妬","(6)":"to"},{"7":"任","(7)":"nin"},{"8":"悩","(8)":"nou"},{"9":"肺","(9)":"hai"},{"0":"搭","(0)":"tou"}],
+    [{"1":"湯","(1)":"yu"},{"2":"登","(2)":"nobo"},{"3":"筒","(3)":"tsutsu"},{"4":"稲","(4)":"ine"},{"5":"脳","(5)":"nou"},{"6":"倍","(6)":"bai"},{"7":"伯","(7)":"haku"},{"8":"鉄","(8)":"tetsu"},{"9":"縛","(9)":"baku"},{"0":"糖","(0)":"tou"}],
+    [{"1":"童","(1)":"dou"},{"2":"伐","(2)":"batsu"},{"3":"阪","(3)":"han"},{"4":"騰","(4)":"tou"},{"5":"匿","(5)":"toku"},{"6":"凸","(6)":"totsu"},{"7":"那","(7)":"na"},{"8":"二","(8)":"ni"},{"9":"把","(9)":"ha"},{"0":"藤","(0)":"fuji"}],
+    [{"1":"頭","(1)":"tou"},{"2":"俳","(2)":"hai"},{"3":"締","(3)":"tei"},{"4":"徒","(4)":"to"},{"5":"同","(5)":"dou"},{"6":"貪","(6)":"don"},{"7":"得","(7)":"toku"},{"8":"道","(8)":"michio"},{"9":"瞳","(9)":"hitomi"},{"0":"峠","(0)":"touge"}],
+    [{"1":"培","(1)":"bai"},{"2":"徳","(2)":"toku"},{"3":"当","(3)":"tou"},{"4":"読","(4)":"doku"},{"5":"洞","(5)":"dou"},{"6":"突","(6)":"totsu"},{"7":"届","(7)":"todoke"},{"8":"篤","(8)":"atsushi"},{"9":"独","(9)":"dugu"},{"0":"栃","(0)":"tochi"}],
+    [{"1":"投","(1)":"tou"},{"2":"頓","(2)":"ton"},{"3":"特","(3)":"toku"},{"4":"八","(4)":"hachi"},{"5":"丼","(5)":"don"},{"6":"胴","(6)":"dou"},{"7":"奈","(7)":"na"},{"8":"内","(8)":"yushi"},{"9":"豚","(9)":"buta"},{"0":"曇","(0)":"zumi"}],
+    [{"1":"討","(1)":"tou"},{"2":"難","(2)":"nan"},{"3":"動","(3)":"dou"},{"4":"弐","(4)":"ni"},{"5":"尼","(5)":"ama"},{"6":"匂","(6)":"nioi"},{"7":"梨","(7)":"nashi"},{"8":"謎","(8)":"nazo"},{"9":"鍋","(9)":"nabe"},{"0":"南","(0)":"minami"}],
+    [{"1":"肉","(1)":"niku"},{"2":"虹","(2)":"niji"},{"3":"日","(3)":"nichi"},{"4":"入","(4)":"nyuu"},{"5":"乳","(5)":"chichi"},{"6":"尿","(6)":"nyou"},{"7":"忍","(7)":"shinobi"},{"8":"搬","(8)":"han"},{"9":"妊","(9)":"nin"},{"0":"凍","(0)":"tou"}],
+    [{"1":"拝","(1)":"hai"},{"2":"捻","(2)":"nen"},{"3":"抜","(3)":"batsu"},{"4":"陶","(4)":"tou"},{"5":"番","(5)":"ban"},{"6":"能","(6)":"nou"},{"7":"燃","(7)":"mo"},{"8":"寧","(8)":"nei"},{"9":"熱","(9)":"netsu"},{"0":"年","(0)":"toshi"}],
+    [{"1":"痘","(1)":"tou"},{"2":"畔","(2)":"han"},{"3":"濃","(3)":"nou"},{"4":"堂","(4)":"dou"},{"5":"比","(5)":"hi"},{"6":"罰","(6)":"batsu"},{"7":"覇","(7)":"ha"},{"8":"波","(8)":"nami"},{"9":"馬","(9)":"uma"},{"0":"婆","(0)":"ba"}],
+    [{"1":"罵","(1)":"ba"},{"2":"背","(2)":"se"},{"3":"盤","(3)":"ban"},{"4":"泊","(4)":"haku"},{"5":"塔","(5)":"tou"},{"6":"働","(6)":"dou"},{"7":"氾","(7)":"han"},{"8":"伴","(8)":"ban"},{"9":"卑","(9)":"hi"},{"0":"廃","(0)":"hai"}],
+    [{"1":"迫","(1)":"haku"},{"2":"答","(2)":"tou"},{"3":"督","(3)":"toku"},{"4":"煩","(4)":"bon"},{"5":"皮","(5)":"kawa"},{"6":"姫","(6)":"hime"},{"7":"賠","(7)":"bai"},{"8":"輩","(8)":"hai"},{"9":"白","(9)":"shiro"},{"0":"梅","(0)":"ume"}],
+    [{"1":"等","(1)":"tou"},{"2":"肥","(2)":"hi"},{"3":"杯","(3)":"hai"},{"4":"売","(4)":"bai"},{"5":"疲","(5)":"tsuka"},{"6":"舶","(6)":"haku"},{"7":"博","(7)":"hiroshi"},{"8":"薄","(8)":"usu"},{"9":"麦","(9)":"mugi"},{"0":"漠","(0)":"baku"}],
+    [{"1":"踏","(1)":"tou"},{"2":"爆","(2)":"baku"},{"3":"鈍","(3)":"don"},{"4":"鉢","(4)":"hachi"},{"5":"箱","(5)":"hako"},{"6":"箸","(6)":"hashi"},{"7":"畑","(7)":"hata"},{"8":"肌","(8)":"hada"},{"9":"発","(9)":"hatsu"},{"0":"髪","(0)":"kami"}],
+    [{"1":"謄","(1)":"tou"},{"2":"粘","(2)":"nen"},{"3":"破","(3)":"ha"},{"4":"閥","(4)":"batsu"},{"5":"媒","(5)":"bai"},{"6":"剝","(6)":"haku"},{"7":"附","(7)":"fu"},{"8":"汎","(8)":"han"},{"9":"配","(9)":"hai"},{"0":"帆","(0)":"ho"}],
+    [{"1":"排","(1)":"hai"},{"2":"衝","(2)":"shou"},{"3":"坂","(3)":"saka"},{"4":"闘","(4)":"tou"},{"5":"板","(5)":"ita"},{"6":"版","(6)":"ban"},{"7":"農","(7)":"nou"},{"8":"般","(8)":"pan"},{"9":"販","(9)":"han"},{"0":"表","(0)":"hyou"}],
+    [{"1":"評","(1)":"hyou"},{"2":"貧","(2)":"hin"},{"3":"符","(3)":"fu"},{"4":"頒","(4)":"han"},{"5":"飯","(5)":"meshi"},{"6":"盗","(6)":"tou"},{"7":"陪","(7)":"bai"},{"8":"繁","(8)":"shige"},{"9":"晩","(9)":"ban"},{"0":"納","(0)":"nou"}],
+    [{"1":"服","(1)":"fuku"},{"2":"批","(2)":"hi"},{"3":"披","(3)":"hi"},{"4":"蛮","(4)":"ban"},{"5":"透","(5)":"tou"},{"6":"派","(6)":"ha"},{"7":"反","(7)":"han"},{"8":"否","(8)":"ina"},{"9":"彼","(9)":"kare"},{"0":"拍","(0)":"haku"}],
+    [{"1":"秒","(1)":"byou"},{"2":"賓","(2)":"hin"},{"3":"府","(3)":"fu"},{"4":"副","(4)":"fuku"},{"5":"仏","(5)":"futsu"},{"6":"悲","(6)":"hi"},{"7":"敗","(7)":"hai"},{"8":"半","(8)":"han"},{"9":"扉","(9)":"tobira"},{"0":"碑","(0)":"ishibumi"}],
+    [{"1":"噴","(1)":"fun"},{"2":"避","(2)":"hi"},{"3":"陛","(3)":"hei"},{"4":"病","(4)":"byou"},{"5":"微","(5)":"bi"},{"6":"尾","(6)":"o"},{"7":"肘","(7)":"hiji"},{"8":"備","(8)":"bin"},{"9":"鼻","(9)":"hana"},{"0":"膝","(0)":"hiza"}],
+    [{"1":"匹","(1)":"hiki"},{"2":"必","(2)":"hitsu"},{"3":"閉","(3)":"hei"},{"4":"筆","(4)":"fude"},{"5":"買","(5)":"bai"},{"6":"百","(6)":"hyaku"},{"7":"俵","(7)":"tawara"},{"8":"票","(8)":"pyou"},{"9":"氷","(9)":"hyou"},{"0":"妃","(0)":"hi"}],
+    [{"1":"斑","(1)":"han"},{"2":"漂","(2)":"hyou"},{"3":"非","(3)":"hi"},{"4":"美","(4)":"bi"},{"5":"描","(5)":"byou"},{"6":"標","(6)":"shimegi"},{"7":"苗","(7)":"nae"},{"8":"猫","(8)":"neko"},{"9":"品","(9)":"hin"},{"0":"浜","(0)":"hama"}],
+    [{"1":"範","(1)":"han"},{"2":"費","(2)":"hi"},{"3":"頻","(3)":"hin"},{"4":"塀","(4)":"hei"},{"5":"瓶","(5)":"bin"},{"6":"不","(6)":"fu"},{"7":"夫","(7)":"otto"},{"8":"父","(8)":"chichi"},{"9":"付","(9)":"tsuki"},{"0":"布","(0)":"fu"}],
+    [{"1":"復","(1)":"fuku"},{"2":"秘","(2)":"hi"},{"3":"紛","(3)":"fun"},{"4":"弊","(4)":"hei"},{"5":"別","(5)":"betsu"},{"6":"偏","(6)":"hen"},{"7":"訃","(7)":"fu"},{"8":"阜","(8)":"oku"},{"9":"犯","(9)":"han"},{"0":"浮","(0)":"uki"}],
+    [{"1":"藩","(1)":"han"},{"2":"墳","(2)":"fun"},{"3":"舗","(3)":"ho"},{"4":"邦","(4)":"hou"},{"5":"譜","(5)":"fu"},{"6":"富","(6)":"tomi"},{"7":"敷","(7)":"shiki"},{"8":"膚","(8)":"hada"},{"9":"侮","(9)":"bu"},{"0":"武","(0)":"takechi"}],
+    [{"1":"部","(1)":"bu"},{"2":"舞","(2)":"mai"},{"3":"封","(3)":"fuu"},{"4":"風","(4)":"kaze"},{"5":"辺","(5)":"hen"},{"6":"幅","(6)":"haba"},{"7":"班","(7)":"han"},{"8":"被","(8)":"hi"},{"9":"扶","(9)":"fu"},{"0":"福","(0)":"fuku"}],
+    [{"1":"腹","(1)":"hara"},{"2":"払","(2)":"harai"},{"3":"物","(3)":"mono"},{"4":"粉","(4)":"kona"},{"5":"沸","(5)":"futsu"},{"6":"飛","(6)":"hi"},{"7":"怖","(7)":"fu"},{"8":"雰","(8)":"fun"},{"9":"奉","(9)":"hou"},{"0":"覆","(0)":"fuku"}],
+    [{"1":"罷","(1)":"hi"},{"2":"普","(2)":"fu"},{"3":"返","(3)":"hen"},{"4":"奮","(4)":"fun"},{"5":"方","(5)":"hou"},{"6":"聞","(6)":"bun"},{"7":"分","(7)":"pun"},{"8":"丙","(8)":"ho"},{"9":"平","(9)":"hira"},{"0":"兵","(0)":"hei"}],
+    [{"1":"併","(1)":"hei"},{"2":"眉","(2)":"bi"},{"3":"泌","(3)":"hi"},{"4":"敏","(4)":"bin"},{"5":"婦","(5)":"fu"},{"6":"並","(6)":"nami"},{"7":"柄","(7)":"gara"},{"8":"幣","(8)":"hidashi"},{"9":"蔽","(9)":"oo"},{"0":"餅","(0)":"mochi"}],
+    [{"1":"米","(1)":"bei"},{"2":"癖","(2)":"kuse"},{"3":"片","(3)":"kata"},{"4":"負","(4)":"fu"},{"5":"蔑","(5)":"betsu"},{"6":"伏","(6)":"fu"},{"7":"憤","(7)":"fun"},{"8":"変","(8)":"hen"},{"9":"膨","(9)":"bou"},{"0":"璧","(0)":"heki"}],
+    [{"1":"赴","(1)":"fu"},{"2":"放","(2)":"hou"},{"3":"編","(3)":"hen"},{"4":"摩","(4)":"ma"},{"5":"勉","(5)":"ben"},{"6":"簿","(6)":"bo"},{"7":"朴","(7)":"boku"},{"8":"本","(8)":"hon"},{"9":"捕","(9)":"ho"},{"0":"便","(0)":"bin"}],
+    [{"1":"補","(1)":"ho"},{"2":"腐","(2)":"fu"},{"3":"文","(3)":"bun"},{"4":"包","(4)":"hou"},{"5":"慕","(5)":"bo"},{"6":"坊","(6)":"bou"},{"7":"母","(7)":"haha"},{"8":"募","(8)":"tsuno"},{"9":"墓","(9)":"haka"},{"0":"暮","(0)":"kure"}],
+    [{"1":"宝","(1)":"takara"},{"2":"抱","(2)":"daite"},{"3":"麻","(3)":"ma"},{"4":"賦","(4)":"fu"},{"5":"複","(5)":"fuku"},{"6":"遍","(6)":"hen"},{"7":"凡","(7)":"bon"},{"8":"没","(8)":"botsu"},{"9":"慢","(9)":"man"},{"0":"俸","(0)":"hou"}],
+    [{"1":"某","(1)":"bou"},{"2":"奔","(2)":"hon"},{"3":"抹","(3)":"matsu"},{"4":"冥","(4)":"mei"},{"5":"銘","(5)":"mei"},{"6":"紋","(6)":"mon"},{"7":"褒","(7)":"hou"},{"8":"蜂","(8)":"hachi"},{"9":"峰","(9)":"mine"},{"0":"豊","(0)":"yutaka"}],
+    [{"1":"縫","(1)":"nui"},{"2":"砲","(2)":"hou"},{"3":"磨","(3)":"ma"},{"4":"万","(4)":"man"},{"5":"歩","(5)":"ho"},{"6":"蜜","(6)":"mitsu"},{"7":"名","(7)":"mei"},{"8":"妄","(8)":"mou"},{"9":"房","(9)":"bou"},{"0":"厄","(0)":"yaku"}],
+    [{"1":"望","(1)":"nozomi"},{"2":"倣","(2)":"hou"},{"3":"免","(3)":"men"},{"4":"輸","(4)":"yu"},{"5":"壁","(5)":"heki"},{"6":"与","(6)":"yo"},{"7":"欲","(7)":"yoku"},{"8":"濫","(8)":"ran"},{"9":"履","(9)":"ri"},{"0":"貌","(0)":"bou"}],
+    [{"1":"妖","(1)":"you"},{"2":"湧","(2)":"yuu"},{"3":"謀","(3)":"bou"},{"4":"保","(4)":"ho"},{"5":"僕","(5)":"boku"},{"6":"牧","(6)":"miyako"},{"7":"頰","(7)":"hon"},{"8":"北","(8)":"kita"},{"9":"木","(9)":"ki"},{"0":"睦","(0)":"mutsumi"}],
+    [{"1":"墨","(1)":"sumi"},{"2":"撲","(2)":"nagu"},{"3":"堀","(3)":"hori"},{"4":"哺","(4)":"ho"},{"5":"亡","(5)":"bou"},{"6":"翻","(6)":"hon"},{"7":"毎","(7)":"mai"},{"8":"盆","(8)":"bon"},{"9":"泡","(9)":"hou"},{"0":"勃","(0)":"botsu"}],
+    [{"1":"満","(1)":"man"},{"2":"弁","(2)":"ben"},{"3":"乏","(3)":"bou"},{"4":"魔","(4)":"ma"},{"5":"法","(5)":"hou"},{"6":"面","(6)":"men"},{"7":"昧","(7)":"mai"},{"8":"妹","(8)":"imoto"},{"9":"埋","(9)":"uma"},{"0":"幕","(0)":"maku"}],
+    [{"1":"膜","(1)":"maku"},{"2":"枕","(2)":"makura"},{"3":"又","(3)":"mata"},{"4":"未","(4)":"mi"},{"5":"末","(5)":"matsu"},{"6":"喩","(6)":"yu"},{"7":"忙","(7)":"bou"},{"8":"役","(8)":"yaku"},{"9":"胞","(9)":"hou"},{"0":"漫","(0)":"man"}],
+    [{"1":"味","(1)":"aji"},{"2":"魅","(2)":"mi"},{"3":"岬","(3)":"misaki"},{"4":"脈","(4)":"myaku"},{"5":"妙","(5)":"myou"},{"6":"民","(6)":"tamiyo"},{"7":"眠","(7)":"min"},{"8":"矛","(8)":"hoko"},{"9":"密","(9)":"mitsu"},{"0":"約","(0)":"yaku"},{"11":"妨","(11)":"bou"}],
+    [{"1":"務","(1)":"tsutomu"},{"2":"無","(2)":"mu"},{"3":"夢","(3)":"yume"},{"4":"霧","(4)":"kiri"},{"5":"娘","(5)":"musume"},{"6":"明","(6)":"akira"},{"7":"迷","(7)":"mei"},{"8":"訪","(8)":"hou"},{"9":"忘","(9)":"bou"}],
+    [{"1":"盟","(1)":"mei"},{"2":"報","(2)":"hou"},{"3":"冒","(3)":"bou"},{"4":"枚","(4)":"mai"},{"5":"耗","(5)":"mou"},{"6":"麺","(6)":"men"},{"7":"茂","(7)":"sugawara"},{"8":"模","(8)":"mo"},{"9":"鳴","(9)":"na"},{"0":"滅","(0)":"metsu"}],
+    [{"1":"毛","(1)":"ke"},{"2":"兆","(2)":"chou"},{"3":"網","(3)":"ami"},{"4":"目","(4)":"me"},{"5":"黙","(5)":"moku"},{"6":"門","(6)":"mon"},{"7":"飽","(7)":"hou"},{"8":"防","(8)":"bou"},{"9":"盲","(9)":"mou"},{"0":"綿","(0)":"men"}],
+    [{"1":"問","(1)":"mon"},{"2":"夜","(2)":"yoru"},{"3":"野","(3)":"no"},{"4":"訳","(4)":"wake"},{"5":"癒","(5)":"yu"},{"6":"冶","(6)":"ya"},{"7":"肪","(7)":"bou"},{"8":"芳","(8)":"hou"},{"9":"命","(9)":"mei"},{"0":"薬","(0)":"yaku"}],
+    [{"1":"躍","(1)":"yaku"},{"2":"闇","(2)":"yami"},{"3":"油","(3)":"abura"},{"4":"諭","(4)":"satoshi"},{"5":"唯","(5)":"tada"},{"6":"崩","(6)":"hou"},{"7":"酪","(7)":"raku"},{"8":"剖","(8)":"bou"},{"9":"弥","(9)":"ya"},{"0":"由","(0)":"yu"}],
+    [{"1":"友","(1)":"tomo"},{"2":"有","(2)":"ari"},{"3":"勇","(3)":"isami"},{"4":"幽","(4)":"kasoke"},{"5":"猶","(5)":"nao"},{"6":"悠","(6)":"yuu"},{"7":"璃","(7)":"ri"},{"8":"紡","(8)":"bou"},{"9":"立","(9)":"ritsu"},{"0":"慮","(0)":"ryo"}],
+    [{"1":"抑","(1)":"yoku"},{"2":"優","(2)":"yuu"},{"3":"傍","(3)":"bou"},{"4":"類","(4)":"rui"},{"5":"麗","(5)":"rei"},{"6":"預","(6)":"yo"},{"7":"誉","(7)":"homare"},{"8":"雄","(8)":"o"},{"9":"誘","(9)":"sasou"},{"0":"融","(0)":"toru"}],
+    [{"1":"劣","(1)":"retsu"},{"2":"路","(2)":"ro"},{"3":"暴","(3)":"bou"},{"4":"湾","(4)":"wan"},{"5":"落","(5)":"raku"},{"6":"欄","(6)":"ran"},{"7":"良","(7)":"ryou"},{"8":"揺","(8)":"you"},{"9":"羊","(9)":"hitsuji"},{"0":"洋","(0)":"hirooki"}],
+    [{"1":"葉","(1)":"ha"},{"2":"腰","(2)":"koshi"},{"3":"様","(3)":"sama"},{"4":"踊","(4)":"odori"},{"5":"窯","(5)":"gama"},{"6":"瞭","(6)":"ryou"},{"7":"隷","(7)":"rei"},{"8":"六","(8)":"roku"},{"9":"塁","(9)":"rui"},{"0":"瘍","(0)":"you"}],
+    [{"1":"謡","(1)":"utai"},{"2":"沃","(2)":"yoka"},{"3":"曜","(3)":"you"},{"4":"拉","(4)":"hesage"},{"5":"裸","(5)":"ra"},{"6":"憂","(6)":"yuu"},{"7":"吏","(7)":"ri"},{"8":"帽","(8)":"bou"},{"9":"涼","(9)":"ryo"},{"0":"翼","(0)":"yoku"}],
+    [{"1":"羅","(1)":"ra"},{"2":"来","(2)":"rai"},{"3":"雷","(3)":"kaminari"},{"4":"頼","(4)":"tayo"},{"5":"辣","(5)":"ratsu"},{"6":"乱","(6)":"ran"},{"7":"卵","(7)":"tamago"},{"8":"絡","(8)":"raku"},{"9":"容","(9)":"you"},{"0":"愉","(0)":"yu"}],
+    [{"1":"覧","(1)":"ran"},{"2":"棒","(2)":"bou"},{"3":"庸","(3)":"you"},{"4":"浴","(4)":"yoku"},{"5":"律","(5)":"ritsu"},{"6":"領","(6)":"ryou"},{"7":"痢","(7)":"ri"},{"8":"裏","(8)":"ura"},{"9":"藍","(9)":"ai"},{"0":"里","(0)":"sato"}],
+    [{"1":"貿","(1)":"bou"},{"2":"倫","(2)":"rin"},{"3":"浪","(3)":"rou"},{"4":"裕","(4)":"yuu"},{"5":"利","(5)":"ri"},{"6":"慄","(6)":"ritsu"},{"7":"略","(7)":"ryaku"},{"8":"柳","(8)":"yanagi"},{"9":"流","(9)":"ryuu"},{"0":"陸","(0)":"riku"}],
+    [{"1":"留","(1)":"ru"},{"2":"竜","(2)":"ryu"},{"3":"粒","(3)":"tsubu"},{"4":"隆","(4)":"takasi"},{"5":"硫","(5)":"i"},{"6":"連","(6)":"ren"},{"7":"旅","(7)":"tabi"},{"8":"了","(8)":"ryou"},{"9":"虜","(9)":"ryo"},{"0":"遊","(0)":"yuu"}],
+    [{"1":"揚","(1)":"you"},{"2":"界","(2)":"kai"},{"3":"弄","(3)":"rou"},{"4":"理","(4)":"ri"},{"5":"遇","(5)":"guu"},{"6":"量","(6)":"ryou"},{"7":"陵","(7)":"misasagi"},{"8":"翌","(8)":"yoku"},{"9":"僚","(9)":"ryo"}],
+    [{"1":"療","(1)":"ryou"},{"2":"養","(2)":"you"},{"3":"厘","(3)":"rin"},{"4":"郵","(4)":"yuu"},{"5":"糧","(5)":"kate"},{"6":"力","(6)":"chikara"},{"7":"緑","(7)":"midori"},{"8":"林","(8)":"hayasho"},{"9":"輪","(9)":"wa"},{"0":"隣","(0)":"tonari"}],
+    [{"1":"臨","(1)":"rin"},{"2":"瑠","(2)":"ryu"},{"3":"涙","(3)":"namida"},{"4":"励","(4)":"tsutomu"},{"5":"累","(5)":"rui"},{"6":"溶","(6)":"you"},{"7":"予","(7)":"yo"},{"8":"災","(8)":"sai"},{"9":"伺","(9)":"ukaga"},{"0":"冷","(0)":"rei"}],
+    [{"1":"戻","(1)":"modo"},{"2":"例","(2)":"tatoe"},{"3":"鈴","(3)":"suzu"},{"4":"暦","(4)":"karenda"},{"5":"歴","(5)":"reki"},{"6":"労","(6)":"rou"},{"7":"進","(7)":"shin"},{"8":"擁","(8)":"you"},{"9":"齢","(9)":"rei"},{"0":"余","(0)":"yo"}],
+    [{"1":"自","(1)":"ji"},{"2":"幼","(2)":"you"},{"3":"老","(3)":"rou"},{"4":"裂","(4)":"retsu"},{"5":"侶","(5)":"ryo"},{"6":"快","(6)":"kai"},{"7":"互","(7)":"go"},{"8":"錬","(8)":"ren"},{"9":"恋","(9)":"koi"},{"0":"呂","(0)":"ro"}],
+    [{"1":"録","(1)":"roku"},{"2":"用","(2)":"you"},{"3":"露","(3)":"ro"},{"4":"烈","(4)":"retsu"},{"5":"零","(5)":"rei"},{"6":"猟","(6)":"ryou"},{"7":"郎","(7)":"rou"},{"8":"離","(8)":"ri"},{"9":"賂","(9)":"mainai"},{"0":"朗","(0)":"akira"}],
+    [{"1":"惑","(1)":"waku"},{"2":"楼","(2)":"rou"},{"3":"陽","(3)":"you"},{"4":"炉","(4)":"ro"},{"5":"麓","(5)":"roku"},{"6":"論","(6)":"ron"},{"7":"和","(7)":"wa"},{"8":"話","(8)":"banashi"},{"9":"漏","(9)":"mo"},{"0":"籠","(0)":"kago"}],
+    [{"1":"賄","(1)":"wai"},{"2":"脇","(2)":"waki"},{"3":"廊","(3)":"rou"},{"4":"枠","(4)":"waku"},{"5":"要","(5)":"you"},{"6":"腕","(6)":"wan"},{"7":"両","(7)":"ryou"}
+    ]
+  ]
+        let currentSet = [];
+        let correctOrder = [];
+        let curr;
+        let data_2;
+        function showAns() {
+
+            let result = data[curr]
+            let newArray = result.map(obj => {
+                let newObj = { ...obj }; // Create a shallow copy of the object
+                const keys = Object.keys(newObj);
+                delete newObj[keys[0]]; // Remove the first key-value pair
+                return newObj;
+            });
+            console.log(result);
+            const tableBody = document.querySelector('#dataTable_2 tbody');
+tableBody.innerHTML = ''; // Clear existing rows
+
+result.forEach((item, index) => {
+    const row = document.createElement('tr');
+    const numberCell = document.createElement('td');
+    const character = document.createElement('td');
+    const pronunciationCell = document.createElement('td');
+    const listenCell = document.createElement('td');
+    const listenButton = document.createElement('button');
+
+    numberCell.textContent = Object.keys(item)[0];
+    character.textContent = Object.values(item)[0];
+    pronunciationCell.textContent = Object.values(item)[1];
+    listenButton.textContent = '🎵';  
+    listenButton.classList.add('btn', 'btn-sm', 'btn-info');
+    listenButton.onclick = () => textToSpeech(Object.values(item)[0]);
+
+    listenCell.appendChild(listenButton);
+    row.appendChild(numberCell);
+    row.appendChild(character);
+    row.appendChild(pronunciationCell);
+    row.appendChild(listenCell);
+    tableBody.appendChild(row);
+
+    document.getElementById('dataTable').style.display= "none";
+    document.getElementById('dataTable_2').style.display= "block";
+
+});
+        }
+        function showPronunciation() {
+            let result = data[curr]
+            let newArray = result.map(obj => {
+                let newObj = { ...obj }; // Create a shallow copy of the object
+                const keys = Object.keys(newObj);
+                delete newObj[keys[0]]; // Remove the first key-value pair
+                return newObj;
+            });
+            console.log(result);
+            const tableBody = document.querySelector('#dataTable tbody');
+    tableBody.innerHTML = ''; // Clear existing rows
+
+    result.forEach((item, index) => {
+        const row = document.createElement('tr');
+        const numberCell = document.createElement('td');
+        const pronunciationCell = document.createElement('td');
+        const listenCell = document.createElement('td');
+        const listenButton = document.createElement('button');
+
+        numberCell.textContent = Object.keys(item)[1];
+        pronunciationCell.textContent = Object.values(item)[1];
+        listenButton.textContent = '🎵'; 
+        listenButton.classList.add('btn', 'btn-sm', 'btn-info');
+        listenButton.onclick = () => textToSpeech(Object.values(item)[0]);
+
+        listenCell.appendChild(listenButton);
+        row.appendChild(numberCell);
+        row.appendChild(pronunciationCell);
+        row.appendChild(listenCell);
+        tableBody.appendChild(row);
+    });
+    document.getElementById('dataTable').style.display= "block";
+    document.getElementById('dataTable_2').style.display= "none";
+}
+
+function textToSpeech(text) {
+    let utterance = new SpeechSynthesisUtterance(text);
+    for (let voice of synth.getVoices()) {
+        if (voice.name === voiceList.value) {
+            utterance.voice = voice;
+        }
+    }
+    synth.speak(utterance);
+}
+        function loadCharacters(e) {
+            let setIndex = e;
+            document.getElementById("characters").innerHTML = "";
+            document.getElementById("result").textContent = "";
+            document.getElementById("inputKeys").value = "";
+
+            let currentSet = data[setIndex];
+            let correctOrder = currentSet.map(item => Object.keys(item)[0]);
+            const shuffledSet = [...currentSet].sort(() => Math.random() - 0.5);
+
+            const characterGrid = document.getElementById("characters");
+            shuffledSet.forEach(item => {
+                const key = Object.keys(item)[0];
+                const value = item[key];
+                const div = document.createElement("div");
+                div.textContent = value;
+                div.className = "character";
+                div.dataset.key = key; // Store the key as a data attribute
+                characterGrid.appendChild(div);
+            });
+
+            data_2 = data[e];
+            const buttonsContainer = document.getElementById('buttonsContainer');
+            buttonsContainer.innerHTML = '';
+
+            data_2.forEach(item => { // 配列をforEachで処理
+                for (const key in item) {
+                    if (key.startsWith("(")) {
+                        const pronunciation = item[key];
+                        const button = document.createElement('button');
+                        button.textContent = pronunciation;
+                        // button.addEventListener('click', () => {
+                        //     const input = document.getElementById('inputKeys');
+                        //     let inputValue = input.value;
+                        //     let commaCount = inputValue.split(',').length - 1;
+                        //     console.log('Total number of commas:', commaCount);
+                        //     if(commaCount >8){input.value += pronunciation}else{input.value += pronunciation + ",";}
+                        //     addSpace();                
+                        //     let val = Object.values(item)[0];
+                        //     textToSpeech(val);
+                        // });
+
+                        button.addEventListener('click', () => {
+                        const input = document.getElementById('inputKeys');
+                        let commaCount = input.value.split(',').length - 1;
+                        let textToInsert = commaCount > 8 ? pronunciation : pronunciation + ",";
+                        insertAtCursor(input, textToInsert);
+                        addSpace();
+                        let val = Object.values(item)[0];
+                        textToSpeech(val);
+                        });
+                            buttonsContainer.appendChild(button);
+                                    }
+                                        }
+                                    });
+        }
+                                function insertAtCursor(input, textToInsert) {
+                        const startPos = input.selectionStart;
+                        const endPos = input.selectionEnd;
+                        const beforeValue = input.value.substring(0, startPos);
+                        const afterValue = input.value.substring(endPos, input.value.length);
+                        input.value = beforeValue + textToInsert + afterValue;
+                        input.selectionStart = input.selectionEnd = startPos + textToInsert.length;
+                        updateHTML();
+                        }
+        // function addSpace() {
+            
+        // const inputField = document.getElementById('inputKeys');
+        // const output = document.getElementById('output');
+        // const words = inputField.value.split(',');
+        // output.innerHTML = "";
+
+        // words.forEach(word => {
+        //     const span = document.createElement('span');
+        //     span.className = 'word';
+        //     span.textContent = word;
+        //     output.appendChild(span);
+        // });
+        // }
+        function updateHTML() {
+  const inputField = document.getElementById('inputKeys');
+  const outputDiv = document.getElementById('output');
+  const values = inputField.value ? inputField.value.split(',') : [];
+  outputDiv.innerHTML = values.map(value => `<span class="word">${value}</span>`).join('');
+}
+        function addSpace() {
+  const inputField = document.getElementById('inputKeys');
+  const output = document.getElementById('output');
+  const words = inputField.value.split(',');
+  output.innerHTML = "";
+
+  words.forEach(word => {
+    if (word.trim() !== "") { // Ensure we don't create empty spans
+      const span = document.createElement('span');
+      span.className = 'word';
+      span.textContent = word;
+      output.appendChild(span);
+    }
+  });
+}
+        function loadCharacters_1() {
+            const s = document.getElementById("setSelector1").value;
+            loadCharacters(s);
+            curr = s;
+
+        }
+        function loadCharacters_2() {
+            const s = document.getElementById("setSelector2").value;
+            loadCharacters(s);
+            curr = s;
+        }
+        function loadCharacters_3() {
+            const s = document.getElementById("setSelector3").value;
+            loadCharacters(s);
+            curr = s;
+        }
+        function loadCharacters_4() {
+            const s = document.getElementById("setSelector4").value;
+            loadCharacters(s);
+            curr = s;
+        }
+        function loadCharacters_5() {
+            const s = document.getElementById("setSelector5").value;
+            loadCharacters(s);
+            curr = s;
+        }
+        function loadCharacters_6() {
+            const s = document.getElementById("setSelector6").value;
+            loadCharacters(s);
+            curr = s;
+        }
+        function loadCharacters_7() {
+            const s = document.getElementById("setSelector7").value;
+            loadCharacters(s);
+            curr = s;
+        }
+        function loadCharacters_8() {
+            const s = document.getElementById("setSelector8").value;
+            loadCharacters(s);
+            curr = s;
+        }
+        function loadCharacters_9() {
+            const s = document.getElementById("setSelector9").value;
+            loadCharacters(s);
+            curr = s;
+        }
+        function loadCharacters_10() {
+            const s = document.getElementById("setSelector10").value;
+            loadCharacters(s);
+            curr = s;
+        }
+        function loadCharacters_11() {
+            const s = document.getElementById("setSelector11").value;
+            loadCharacters(s);
+            curr = s;
+        }
+        function loadCharacters_12() {
+            const s = document.getElementById("setSelector12").value;
+            loadCharacters(s);
+            curr = s;
+        }
+        function loadCharacters_13() {
+            const s = document.getElementById("setSelector13").value;
+            loadCharacters(s);
+            curr = s;
+        }
+        function loadCharacters_14() {
+            const s = document.getElementById("setSelector14").value;
+            loadCharacters(s);
+            curr = s;
+        }
+        function loadCharacters_15() {
+            const s = document.getElementById("setSelector15").value;
+            loadCharacters(s);
+            curr = s;
+        }
+        // Create buttons
+
+     
+
+// Iterate through the array and then the object within it
+
+       
+        function checkAnswer() {
+            const input = document.getElementById("inputKeys").value.trim();
+            const inputKeys = input.split(",");
+            const result = document.getElementById("result");
+
+            const characterDivs = document.querySelectorAll(".character");
+            const displayedKeys = Array.from(characterDivs).map(div => div.dataset.key);
+
+            console.log("Displayed Keys:", displayedKeys);
+            console.log("Input Keys:", inputKeys);
+
+
+            if (inputKeys.length !== displayedKeys.length) {
+                result.textContent = "Incorrect: Key count mismatch!";
+                result.style.color = "red";
+                return;
+            }
+
+            let isCorrect = true;
+            inputKeys.forEach((key, index) => {
+                    const data_3 = data_2.find(item => Object.keys(item)[0] === displayedKeys[index]);
+                    const values = Object.values(data_3);
+                     if (key !== values[1]) {
+                        isCorrect = false;
+                        console.log("key " + key + " values " + values[1]);
+                    }
+            });
+
+            result.textContent = isCorrect ? "You are correct!" : "Incorrect! Highlighting errors.";
+            result.style.color = isCorrect ? "green" : "red";
+
+            characterDivs.forEach((div, index) => {
+                div.classList.remove("correct", "incorrect");
+                if (inputKeys[index] === Object.values(data_2.find(item => Object.keys(item)[0] === displayedKeys[index]))[1]) {
+                    div.classList.add("correct");
+                } else {
+                    div.classList.add("incorrect");
+                }
+            });
+        }
+
+        window.onload = loadCharacters;
+
+
+
+
+
+
+
+        //         function findDuplicateIndices(arr) {
+        //   const duplicateIndices = [];
+        //   arr.forEach((subArray, index) => {
+        //     const values = subArray.map(obj => Object.values(obj)[0]);
+        //     const uniqueValues = new Set(values);
+        //     if (uniqueValues.size !== values.length) {
+        //       duplicateIndices.push(index);
+        //     }
+        //   });
+        //   return duplicateIndices;
+        // }
+
+        // const duplicateIndices = findDuplicateIndices(data_2);
+        // console.log(duplicateIndices);
+        // const mergeData = (data, data_2) => {
+        //     return data.map((subArray, index) => {
+        //         return subArray.map((item, i) => {
+        //             const key = Object.keys(item)[0];
+        //             return { ...item, sound: data_2[index][i][key] };
+        //         });
+        //     });
+        // };
+
+        // const data_3 = mergeData(data, data_2);
+
+        // console.log(data_3);
+        // const replacements = ["first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth"];
+
+        // const replaceSoundKey = (data, replacements) => {
+        //     return data.map(subArray => {
+        //         return subArray.map((item, index) => {
+        //             const newItem = { ...item };
+        //             const value = newItem.sound;
+        //             delete newItem.sound;
+        //             newItem[replacements[index]] = value;
+        //             return newItem;
+        //         });
+        //     });
+        // };
+
+        // const updatedData = replaceSoundKey(data, replacements);
+
+        // console.log(updatedData);
+    </script>
+    <script>
+    const textarea = document.getElementById("textarea"),
+          voiceList = document.getElementById("select"),
+          speechBtn = document.getElementById("button");
+
+    let synth = speechSynthesis,
+        isSpeaking = true;
+
+    voices();
+
+    function voices() {
+      for (let voice of synth.getVoices()) {
+        let selected = voice.lang === "ja-JP" ? "selected" : "";
+        let option = `<option value="${voice.name}" ${selected}>${voice.name} (${voice.lang})</option>`;
+        voiceList.insertAdjacentHTML("beforeend", option);
+      }
+    }
+
+    synth.addEventListener("voiceschanged", voices);
+    function textToSpeech(text) {
+    let utterance = new SpeechSynthesisUtterance(text);
+    for (let voice of synth.getVoices()) {
+        if (voice.name === voiceList.value) {
+            utterance.voice = voice;
+        }
+    }
+    synth.speak(utterance);
+}
+
+    function textToSpeech(text) {
+      let utterance = new SpeechSynthesisUtterance(text);
+      for (let voice of synth.getVoices()) {
+        if (voice.name === voiceList.value) {
+          utterance.voice = voice;
+        }
+      }
+      synth.speak(utterance);
+    }
+
+    speechBtn.addEventListener("click", e => {
+      e.preventDefault();
+      if (textarea.value !== "") {
+        if (!synth.speaking) {
+          textToSpeech(textarea.value);
+        }
+        if (textarea.value.length > 80) {
+          setInterval(() => {
+            if (!synth.speaking && !isSpeaking) {
+              isSpeaking = true;
+              speechBtn.innerText = "submit";
+            }
+          });
+          if (isSpeaking) {
+            synth.resume();
+            isSpeaking = false;
+            speechBtn.innerText = "音声を一時停止";
+          } else {
+            synth.pause();
+            isSpeaking = true;
+            speechBtn.innerText = "音声を再開";
+          }
+        } else {
+          speechBtn.innerText = "submit";
+        }
+      }
+    });
+
+
+   
+  </script>
+</body>
+
+</html>
